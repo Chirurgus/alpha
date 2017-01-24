@@ -16,4 +16,12 @@ class ALPHA_API ATestPlayerController : public APlayerController
 
 	ATestPlayerController();
 	
+	void SetupInputComponent() override;
+
+	void MoveForward(float v);
+	void MoveRight(float v);
+	void JumpPress();
+	void JumpRelease();
+	//Looking around?????
+
 };

@@ -4,6 +4,8 @@
 
 #include "GameFramework/GameModeBase.h"
 #include "Engine.h"//to get GEngine
+#include "AlphaCharacter.h"
+#include "TestPlayerController.h"
 #include "AlphaGameModeBase.generated.h"
 
 /**
@@ -14,9 +16,8 @@ class ALPHA_API AAlphaGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
+	AAlphaGameModeBase();
 	AAlphaGameModeBase(const FObjectInitializer& obj_init);
 
 	void StartPlay() override;
-	
-	
 };
