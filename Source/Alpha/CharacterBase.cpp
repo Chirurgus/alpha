@@ -26,6 +26,54 @@ void ACharacterBase::Tick( float DeltaTime )
 
 }
 
+void ACharacterBase::WalkForward(float v)
+{
+	if (v && Controller) {
+		// find out which way is right
+		const FRotator rotation {Controller->GetControlRotation()};
+		const FRotator yaw_rotation {0, rotation.Yaw, 0};
+	
+		// get right vector 
+		const FVector dir {FRotationMatrix(yaw_rotation).GetUnitAxis(EAxis::X)};
+		// add movement in that direction
+		AddMovementInput(dir, v);
+	}
+}
+
+void ACharacterBase::WalkRight(float v)
+{
+	if (v && Controller) {
+		// find out which way is right
+		const FRotator rotation {Controller->GetControlRotation()};
+		const FRotator yaw_rotation {0, rotation.Yaw, 0};
+	
+		// get right vector 
+		const FVector dir {FRotationMatrix(yaw_rotation).GetUnitAxis(EAxis::Y)};
+		// add movement in that direction
+		AddMovementInput(dir, v);
+	}
+}
+
+void ACharacterBase::LookUp(float v)
+{
+
+}
+
+void ACharacterBase::LookRight(float v)
+{
+
+}
+
+void ACharacterBase::JumpPress()
+{
+
+}
+
+void ACharacterBase::JumpRelease()
+{
+
+}
+
 // Called to bind functionality to input
 void ACharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {

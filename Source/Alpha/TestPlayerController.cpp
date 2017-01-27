@@ -14,15 +14,33 @@ void ATestPlayerController::SetupInputComponent()
 	if (InputComponent) {
 		InputComponent->BindAxis("MoveForward", this, &ATestPlayerController::MoveForward);
 		InputComponent->BindAxis("MoveRight", this, &ATestPlayerController::MoveRight);
+		InputComponent->BindAxis("LookUp", this, &ATestPlayerController::LookUp);
+		InputComponent->BindAxis("LookRight", this, &ATestPlayerController::LookRight);
 		InputComponent->BindAction("Jump",IE_Pressed, this, &ATestPlayerController::JumpPress);
 		InputComponent->BindAction("Jump",IE_Released, this, &ATestPlayerController::JumpRelease);
 	}
 	//TODO: Handle if InputComponent is null
 }
 
+void ATestPlayerController::LookUp(float v)
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->AddControllerPitchInput(v);
+	}
+}
+
+void ATestPlayerController::LookRight(float v)
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->AddControllerYawInput(v);
+	}
+}
+
 void ATestPlayerController::MoveForward(float v)
 {
-	AAlphaCharacter* cp {Cast<AAlphaCharacter>(GetPawn())};
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
 	if (cp) {
 		cp->MoveForward(v);
 	}
@@ -30,7 +48,7 @@ void ATestPlayerController::MoveForward(float v)
 
 void ATestPlayerController::MoveRight(float v)
 {
-	AAlphaCharacter* cp {Cast<AAlphaCharacter>(GetPawn())};
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
 	if (cp) {
 		cp->MoveRight(v);
 	}
@@ -38,7 +56,7 @@ void ATestPlayerController::MoveRight(float v)
 
 void ATestPlayerController::JumpPress()
 {
-	AAlphaCharacter* cp {Cast<AAlphaCharacter>(GetPawn())};
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
 	if (cp && !cp->IsJumping()) {
 		cp->Jump();
 	}

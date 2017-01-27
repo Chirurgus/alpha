@@ -22,6 +22,10 @@ class ALPHA_API ATestPlayerController : public APlayerController
 	void MoveRight(float v);
 	void JumpPress();
 	void JumpRelease();
-	//Looking around?????
+	void LookUp(float v);
+	void LookRight(float v);
 
+	//Looking around?????
+private:
+	using pawn_type = AAlphaCharacter;
 };
