@@ -11,7 +11,7 @@ AAlphaGameModeBase::AAlphaGameModeBase()
 AAlphaGameModeBase::AAlphaGameModeBase(const FObjectInitializer & obj_init)
 	: Super(obj_init) 
 {
-	DefaultPawnClass = AAlphaCharacter::StaticClass();
+	DefaultPawnClass = ACharacterBase::StaticClass();
 	PlayerControllerClass = ATestPlayerController::StaticClass();
 	
 }

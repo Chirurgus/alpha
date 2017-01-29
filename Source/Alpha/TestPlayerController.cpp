@@ -4,7 +4,7 @@
 #include "TestPlayerController.h"
 
 ATestPlayerController::ATestPlayerController()
-	: Super()
+	: Super{}
 {
 }
 
@@ -26,7 +26,7 @@ void ATestPlayerController::LookUp(float v)
 {
 	pawn_type* cp {Cast<pawn_type>(GetPawn())};
 	if (cp) {
-		cp->AddControllerPitchInput(v);
+		cp->LookUp(v);
 	}
 }
 
@@ -34,7 +34,7 @@ void ATestPlayerController::LookRight(float v)
 {
 	pawn_type* cp {Cast<pawn_type>(GetPawn())};
 	if (cp) {
-		cp->AddControllerYawInput(v);
+		cp->LookRight(v);
 	}
 }
 
@@ -64,4 +64,8 @@ void ATestPlayerController::JumpPress()
 
 void ATestPlayerController::JumpRelease()
 {
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp && !cp->IsJumping()) {
+		cp->JumpRelease();
+	}
 }

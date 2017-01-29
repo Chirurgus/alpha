@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Alpha.h"
+#include "Engine.h"
 #include "CharacterBase.h"
 
 
@@ -26,7 +27,7 @@ void ACharacterBase::Tick( float DeltaTime )
 
 }
 
-void ACharacterBase::WalkForward(float v)
+void ACharacterBase::MoveForward(float v)
 {
 	if (v && Controller) {
 		// find out which way is right
@@ -40,7 +41,7 @@ void ACharacterBase::WalkForward(float v)
 	}
 }
 
-void ACharacterBase::WalkRight(float v)
+void ACharacterBase::MoveRight(float v)
 {
 	if (v && Controller) {
 		// find out which way is right
@@ -56,28 +57,20 @@ void ACharacterBase::WalkRight(float v)
 
 void ACharacterBase::LookUp(float v)
 {
-
+	AddControllerPitchInput(-v);
 }
 
 void ACharacterBase::LookRight(float v)
 {
-
+	AddControllerYawInput(v);
 }
 
 void ACharacterBase::JumpPress()
 {
-
+	Jump();
 }
 
 void ACharacterBase::JumpRelease()
 {
-
+	StopJumping();
 }
-
-// Called to bind functionality to input
-void ACharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-

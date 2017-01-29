@@ -4,6 +4,7 @@
 
 #include "GameFramework/PlayerController.h"
 #include "AlphaCharacter.h"
+#include "CharacterBase.h"
 #include "TestPlayerController.generated.h"
 
 /**
@@ -25,7 +26,6 @@ class ALPHA_API ATestPlayerController : public APlayerController
 	void LookUp(float v);
 	void LookRight(float v);
 
-	//Looking around?????
 private:
-	using pawn_type = AAlphaCharacter;
+	using pawn_type = ACharacterBase;
 };

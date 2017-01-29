@@ -13,7 +13,6 @@ class ALPHA_API ACharacterBase : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ACharacterBase();
-	ACharacterBase(const FObjectInitializer& obj_init);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,9 +21,9 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 
 	UFUNCTION()
-	void WalkForward(float v);
+	void MoveForward(float v);
 	UFUNCTION()
-	void WalkRight(float v);
+	void MoveRight(float v);
 	UFUNCTION()
 	void LookUp(float v);
 	UFUNCTION()
@@ -33,14 +32,12 @@ public:
 	void JumpPress();
 	UFUNCTION()
 	void JumpRelease();
-	
 
-protected:
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+ /*
 private:
 	UPROPERTY()
 	UCameraComponent* _camera_comp{nullptr};
+ */
 	
 	
 };
