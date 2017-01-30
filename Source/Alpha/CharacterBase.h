@@ -5,7 +5,7 @@
 #include "GameFramework/Character.h"
 #include "CharacterBase.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class ALPHA_API ACharacterBase : public ACharacter
 {
 	GENERATED_BODY()
