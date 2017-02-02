@@ -3,6 +3,6 @@
 #ifndef __ALPHA_H__
 #define __ALPHA_H__
 
-#include "EngineMinimal.h"
+#include "Engine.h"
 
 #endif

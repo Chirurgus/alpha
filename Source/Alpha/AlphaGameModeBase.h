@@ -3,7 +3,6 @@
 #pragma once
 
 #include "GameFramework/GameModeBase.h"
-#include "Engine.h"//to get GEngine
 #include "AlphaCharacter.h"
 #include "CharacterBase.h"
 #include "TestPlayerController.h"

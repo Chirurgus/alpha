@@ -74,3 +74,25 @@ void ACharacterBase::JumpRelease()
 {
 	StopJumping();
 }
+
+void ACharacterBase::Shoot()
+{
+	FVector camera_pos{};
+	FRotator camera_rot{};
+	GetActorEyesViewPoint(camera_pos, camera_rot);
+	const FRotator muzzle_rot {camera_rot};
+	const FVector muzzle_pos {camera_pos + FTransform(camera_rot).TransformVector(_muzzle_offset)};
+	UWorld* const world {GetWorld()};
+	if (world) {
+		FActorSpawnParameters spawn_param;
+		spawn_param.Owner = this;
+		spawn_param.Instigator = Instigator;
+		// spawn the projectile at the muzzle
+		AGunProjectile* const projectile {world->SpawnActor<AGunProjectile>(_projectile_type, muzzle_pos, muzzle_rot, spawn_param)};
+		if (projectile)
+		{
+			// find launch direction
+			projectile->InitVelocity(muzzle_rot.Vector());
+		}
+	}
+}

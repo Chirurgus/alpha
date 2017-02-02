@@ -18,6 +18,8 @@ void ATestPlayerController::SetupInputComponent()
 		InputComponent->BindAxis("LookRight", this, &ATestPlayerController::LookRight);
 		InputComponent->BindAction("Jump",IE_Pressed, this, &ATestPlayerController::JumpPress);
 		InputComponent->BindAction("Jump",IE_Released, this, &ATestPlayerController::JumpRelease);
+		InputComponent->BindAction("Shoot",IE_Pressed, this, &ATestPlayerController::ShootPressed);
+		InputComponent->BindAction("Shoot",IE_Released, this, &ATestPlayerController::ShootReleased);
 	}
 	//TODO: Handle if InputComponent is null
 }
@@ -65,7 +67,19 @@ void ATestPlayerController::JumpPress()
 void ATestPlayerController::JumpRelease()
 {
 	pawn_type* cp {Cast<pawn_type>(GetPawn())};
-	if (cp && !cp->IsJumping()) {
+	if (cp) {
 		cp->JumpRelease();
 	}
+}
+
+void ATestPlayerController::ShootPressed()
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->Shoot();
+	}
+ }
+
+void ATestPlayerController::ShootReleased()
+{
 }

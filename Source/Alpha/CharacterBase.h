@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Character.h"
+#include "GunProjectile.h"
 #include "CharacterBase.generated.h"
 
 UCLASS(Blueprintable)
@@ -32,9 +33,16 @@ public:
 	void JumpPress();
 	UFUNCTION()
 	void JumpRelease();
+	UFUNCTION()
+	void Shoot();
 
+protected:
+	UPROPERTY(EditAnywhere, Category=Projectile)
+	TSubclassOf<AGunProjectile> _projectile_type;
+	
+	UPROPERTY(EditAnywhere, Category=Gameplay)
+	FVector _muzzle_offset;
  /*
-private:
 	UPROPERTY()
 	UCameraComponent* _camera_comp{nullptr};
  */
