@@ -5,7 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "GunProjectile.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class ALPHA_API AGunProjectile : public AActor
 {
 	GENERATED_BODY()

@@ -77,6 +77,7 @@ void ACharacterBase::JumpRelease()
 
 void ACharacterBase::Shoot()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, "Trying to shoot in character");
 	FVector camera_pos{};
 	FRotator camera_rot{};
 	GetActorEyesViewPoint(camera_pos, camera_rot);
@@ -84,6 +85,7 @@ void ACharacterBase::Shoot()
 	const FVector muzzle_pos {camera_pos + FTransform(camera_rot).TransformVector(_muzzle_offset)};
 	UWorld* const world {GetWorld()};
 	if (world) {
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, "Got past 1st if");
 		FActorSpawnParameters spawn_param;
 		spawn_param.Owner = this;
 		spawn_param.Instigator = Instigator;
@@ -91,8 +93,10 @@ void ACharacterBase::Shoot()
 		AGunProjectile* const projectile {world->SpawnActor<AGunProjectile>(_projectile_type, muzzle_pos, muzzle_rot, spawn_param)};
 		if (projectile)
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, "Got past 2st if");
 			// find launch direction
 			projectile->InitVelocity(muzzle_rot.Vector());
+			GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, "Shooting!");
 		}
 	}
 }
