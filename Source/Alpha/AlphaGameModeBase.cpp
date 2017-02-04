@@ -12,14 +12,13 @@ AAlphaGameModeBase::AAlphaGameModeBase(const FObjectInitializer & obj_init)
 	: Super(obj_init) 
 {
 	static ConstructorHelpers::FClassFinder<APawn> 
-		PlayerPawnObject(TEXT("Pawn'/Game/Blueprints/CharacterBase_BP.CharacterBase_BP_C'"));
+		PlayerPawnObject(TEXT("Pawn'/Game/Blueprints/CharacterBase_BP.CharacterBase_BP'"));
 	if (PlayerPawnObject.Class)
 	{
 		DefaultPawnClass = PlayerPawnObject.Class;
 	}
 	DefaultPawnClass = ACharacterBase::StaticClass();
 	PlayerControllerClass = ATestPlayerController::StaticClass();
-	
 }
 
 void AAlphaGameModeBase::StartPlay()

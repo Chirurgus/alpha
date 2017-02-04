@@ -10,7 +10,6 @@ ACharacterBase::ACharacterBase()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 // Called when the game starts or when spawned
@@ -77,26 +76,25 @@ void ACharacterBase::JumpRelease()
 
 void ACharacterBase::Shoot()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, "Trying to shoot in character");
-	FVector camera_pos{};
-	FRotator camera_rot{};
-	GetActorEyesViewPoint(camera_pos, camera_rot);
-	const FRotator muzzle_rot {camera_rot};
-	const FVector muzzle_pos {camera_pos + FTransform(camera_rot).TransformVector(_muzzle_offset)};
-	UWorld* const world {GetWorld()};
-	if (world) {
-		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, "Got past 1st if");
-		FActorSpawnParameters spawn_param;
-		spawn_param.Owner = this;
-		spawn_param.Instigator = Instigator;
-		// spawn the projectile at the muzzle
-		AGunProjectile* const projectile {world->SpawnActor<AGunProjectile>(_projectile_type, muzzle_pos, muzzle_rot, spawn_param)};
-		if (projectile)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, "Got past 2st if");
-			// find launch direction
-			projectile->InitVelocity(muzzle_rot.Vector());
-			GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, "Shooting!");
+	if (_projectile_type) {
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, "Trying to shoot");
+		FVector camera_pos{};
+		FRotator camera_rot{};
+		GetActorEyesViewPoint(camera_pos, camera_rot);
+		const FRotator muzzle_rot {camera_rot};
+		const FVector muzzle_pos {camera_pos + FTransform(camera_rot).TransformVector(_muzzle_offset)};
+		UWorld* const world {GetWorld()};
+		if (world) {
+			FActorSpawnParameters spawn_param;
+			spawn_param.Owner = this;
+			spawn_param.Instigator = Instigator;
+			// spawn the projectile at the muzzle
+			AGunProjectile* const projectile {world->SpawnActor<AGunProjectile>(_projectile_type, muzzle_pos, muzzle_rot, spawn_param)};
+			if (projectile)
+			{
+				// find launch direction
+				projectile->InitVelocity(muzzle_rot.Vector());
+			}
 		}
 	}
 }

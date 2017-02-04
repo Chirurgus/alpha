@@ -20,11 +20,21 @@ AGunProjectile::AGunProjectile(const FObjectInitializer& obj_init)
 	_capsule_comp->InitSphereRadius(5.0f);
 	
 	_mvm_comp = obj_init.CreateAbstractDefaultSubobject<UProjectileMovementComponent>(this, "MovementComponent");
-	_mvm_comp->InitialSpeed = 10000.0f;
+	//_mvm_comp->InitialSpeed = 00000.0f;
 	_mvm_comp->SetUpdatedComponent(_capsule_comp);
+	_mvm_comp->InitialSpeed = 100.0f;
 	_mvm_comp->MaxSpeed = 20000.0f;
 	_mvm_comp->bRotationFollowsVelocity = true;
 	_mvm_comp->bShouldBounce = false;
+ /*
+ _mvm_comp = obj_init.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
+    _mvm_comp->UpdatedComponent = _capsule_comp;
+    _mvm_comp->InitialSpeed = 3000.f;
+    _mvm_comp->MaxSpeed = 3000.f;
+    _mvm_comp->bRotationFollowsVelocity = true;
+    _mvm_comp->bShouldBounce = true;
+    _mvm_comp->Bounciness  = 0.3f;
+	*/
 }
 // Called when the game starts or when spawned
 void AGunProjectile::BeginPlay()

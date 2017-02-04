@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class ALPHA_API AAlphaGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
