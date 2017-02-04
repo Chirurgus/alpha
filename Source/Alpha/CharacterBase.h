@@ -38,6 +38,7 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, Category=Projectile)
+	//UPROPERTY(EditDefaultsOnly, Category=Projectile)
 	TSubclassOf<AGunProjectile> _projectile_type;
 	
 	UPROPERTY(EditAnywhere, Category=Gameplay)

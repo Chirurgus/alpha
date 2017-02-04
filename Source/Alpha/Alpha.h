@@ -5,4 +5,5 @@
 
 #include "Engine.h"
 
+#define PRINT_DEBUG_MESSAGE(x) GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, x);
 #endif
