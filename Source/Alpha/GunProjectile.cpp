@@ -16,16 +16,16 @@ AGunProjectile::AGunProjectile()
 AGunProjectile::AGunProjectile(const FObjectInitializer& obj_init)
 	: Super{obj_init}
 {
-	_capsule_comp = obj_init.CreateDefaultSubobject<USphereComponent>(this, "ShpereComponent");		
-	_capsule_comp->InitSphereRadius(5.0f);
+	_SphereComponent = obj_init.CreateDefaultSubobject<USphereComponent>(this, "ShpereComponent");		
+	_SphereComponent->InitSphereRadius(5.0f);
 	
-	_mvm_comp = obj_init.CreateAbstractDefaultSubobject<UProjectileMovementComponent>(this, "MovementComponent");
+	_MovementComponent = obj_init.CreateAbstractDefaultSubobject<UProjectileMovementComponent>(this, "MovementComponent");
 	//_mvm_comp->InitialSpeed = 00000.0f;
-	_mvm_comp->SetUpdatedComponent(_capsule_comp);
-	_mvm_comp->InitialSpeed = 100.0f;
-	_mvm_comp->MaxSpeed = 20000.0f;
-	_mvm_comp->bRotationFollowsVelocity = true;
-	_mvm_comp->bShouldBounce = false;
+	_MovementComponent->SetUpdatedComponent(_SphereComponent);
+	_MovementComponent->InitialSpeed = 100.0f;
+	_MovementComponent->MaxSpeed = 20000.0f;
+	_MovementComponent->bRotationFollowsVelocity = true;
+	_MovementComponent->bShouldBounce = false;
  /*
  _mvm_comp = obj_init.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
     _mvm_comp->UpdatedComponent = _capsule_comp;
@@ -50,8 +50,8 @@ void AGunProjectile::Tick( float DeltaTime )
 
 void AGunProjectile::InitVelocity(const FVector& dir)
 {
-	if (_mvm_comp) {
-		_mvm_comp->Velocity = _mvm_comp->InitialSpeed * dir;
+	if (_MovementComponent) {
+		_MovementComponent->Velocity = _MovementComponent->InitialSpeed * dir;
 	}
 }
 

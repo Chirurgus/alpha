@@ -39,10 +39,10 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, Category=Projectile)
 	//UPROPERTY(EditDefaultsOnly, Category=Projectile)
-	TSubclassOf<AGunProjectile> _projectile_type;
+	TSubclassOf<AGunProjectile> _ProjectileClass;
 	
 	UPROPERTY(EditAnywhere, Category=Gameplay)
-	FVector _muzzle_offset;
+	FVector _MuzzleOffset;
  /*
 	UPROPERTY()
 	UCameraComponent* _camera_comp{nullptr};
