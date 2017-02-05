@@ -76,20 +76,19 @@ void ACharacterBase::JumpRelease()
 
 void ACharacterBase::Shoot()
 {
-	if (_projectile_type) {
-		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, "Trying to shoot");
+	if (_ProjectileClass) {
 		FVector camera_pos{};
 		FRotator camera_rot{};
 		GetActorEyesViewPoint(camera_pos, camera_rot);
 		const FRotator muzzle_rot {camera_rot};
-		const FVector muzzle_pos {camera_pos + FTransform(camera_rot).TransformVector(_muzzle_offset)};
+		const FVector muzzle_pos {camera_pos + FTransform(camera_rot).TransformVector(_MuzzleOffset)};
 		UWorld* const world {GetWorld()};
 		if (world) {
 			FActorSpawnParameters spawn_param;
 			spawn_param.Owner = this;
 			spawn_param.Instigator = Instigator;
 			// spawn the projectile at the muzzle
-			AGunProjectile* const projectile {world->SpawnActor<AGunProjectile>(_projectile_type, muzzle_pos, muzzle_rot, spawn_param)};
+			AGunProjectile* const projectile {world->SpawnActor<AGunProjectile>(_ProjectileClass, muzzle_pos, muzzle_rot, spawn_param)};
 			if (projectile)
 			{
 				// find launch direction

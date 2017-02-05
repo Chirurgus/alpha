@@ -26,8 +26,8 @@ public:
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	USphereComponent* _capsule_comp;
+	USphereComponent* _SphereComponent;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UProjectileMovementComponent* _mvm_comp;
+	UProjectileMovementComponent* _MovementComponent;
 };
