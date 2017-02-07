@@ -36,17 +36,18 @@ public:
 	UFUNCTION()
 	void Shoot();
 
+	void Die();
+	float TakeDamage(float damage,
+				     const FDamageEvent& damage_event,
+					 AController* instigator,
+					 AActor* damage_causer) override;
 protected:
 	UPROPERTY(EditAnywhere, Category=Projectile)
-	//UPROPERTY(EditDefaultsOnly, Category=Projectile)
 	TSubclassOf<AGunProjectile> _ProjectileClass;
 	
 	UPROPERTY(EditAnywhere, Category=Gameplay)
 	FVector _MuzzleOffset;
- /*
-	UPROPERTY()
-	UCameraComponent* _camera_comp{nullptr};
- */
-	
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Status)
+	float _Health;
 };
