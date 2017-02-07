@@ -97,3 +97,20 @@ void ACharacterBase::Shoot()
 		}
 	}
 }
+
+void ACharacterBase::Die()
+{
+	AController* contoller {GetController()};
+	contoller->UnPossess();
+	PRINT_DEBUG_MESSAGE("YOU DIED");
+}
+float ACharacterBase::TakeDamage(float damage,const FDamageEvent & damage_event,AController * instigator,AActor * damage_causer)
+{
+	if (damage) {
+		_Health -= damage;	
+		if (_Health < 0) {
+			Die();	
+		}
+	}
+	return damage;
+}
