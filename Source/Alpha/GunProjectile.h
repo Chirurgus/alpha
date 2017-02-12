@@ -3,10 +3,12 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "ProjectileBase.h"
+#include "CharacterBase.h"
 #include "GunProjectile.generated.h"
 
 UCLASS(Blueprintable)
-class ALPHA_API AGunProjectile : public AActor
+class ALPHA_API AGunProjectile : public AProjectileBase
 {
 	GENERATED_BODY()
 	
@@ -21,13 +23,12 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 	
-	void InitVelocity(const FVector& dir);
+	UFUNCTION()
+	void OnOverlap(UPrimitiveComponent* OverlappedComponent,
+					AActor* OtherActor,
+					UPrimitiveComponent* OtherComp,
+					int32 OtherBodyIndex,
+					bool bFromSweep,
+					const FHitResult& SweepResult);
 
-protected:
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	USphereComponent* _SphereComponent;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UProjectileMovementComponent* _MovementComponent;
 };

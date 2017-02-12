@@ -3,7 +3,7 @@
 #pragma once
 
 #include "GameFramework/Character.h"
-#include "GunProjectile.h"
+#include "ProjectileBase.h"
 #include "CharacterBase.generated.h"
 
 UCLASS(Blueprintable)
@@ -35,15 +35,20 @@ public:
 	void JumpRelease();
 	UFUNCTION()
 	void Shoot();
-
+	
+	UFUNCTION(BlueprintCallable, Category="Health")
 	void Die();
+
+	UFUNCTION(BlueprintCallable, Category="Health")
 	float TakeDamage(float damage,
-				     const FDamageEvent& damage_event,
-					 AController* instigator,
-					 AActor* damage_causer) override;
+				     const FDamageEvent& dmg_event,
+					 AController* dmg_instigator,
+					 AActor* dmg_causer) override;
+	float TakeDamageTest(float damage);
+
 protected:
 	UPROPERTY(EditAnywhere, Category=Projectile)
-	TSubclassOf<AGunProjectile> _ProjectileClass;
+	TSubclassOf<AProjectileBase> _ProjectileClass;
 	
 	UPROPERTY(EditAnywhere, Category=Gameplay)
 	FVector _MuzzleOffset;

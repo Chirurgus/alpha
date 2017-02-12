@@ -16,7 +16,7 @@ ACharacterBase::ACharacterBase()
 void ACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	_Health = 1000;
 }
 
 // Called every frame
@@ -88,7 +88,8 @@ void ACharacterBase::Shoot()
 			spawn_param.Owner = this;
 			spawn_param.Instigator = Instigator;
 			// spawn the projectile at the muzzle
-			AGunProjectile* const projectile {world->SpawnActor<AGunProjectile>(_ProjectileClass, muzzle_pos, muzzle_rot, spawn_param)};
+			AProjectileBase* const 
+				projectile {world->SpawnActor<AProjectileBase>(_ProjectileClass, muzzle_pos, muzzle_rot, spawn_param)};
 			if (projectile)
 			{
 				// find launch direction
@@ -104,7 +105,19 @@ void ACharacterBase::Die()
 	contoller->UnPossess();
 	PRINT_DEBUG_MESSAGE("YOU DIED");
 }
-float ACharacterBase::TakeDamage(float damage,const FDamageEvent & damage_event,AController * instigator,AActor * damage_causer)
+
+float ACharacterBase::TakeDamage(float damage,const FDamageEvent&,AController*,AActor*)
+{
+	if (damage) {
+		_Health -= damage;	
+		if (_Health < 0) {
+			Die();	
+		}
+	}
+	return damage;
+}
+
+float ACharacterBase::TakeDamageTest(float damage)
 {
 	if (damage) {
 		_Health -= damage;	
