@@ -27,8 +27,11 @@ class ALPHA_API ATestPlayerController : public APlayerController
 	void LookRight(float v);
 	void ShootPressed();
 	void ShootReleased();
+	void CrouchPressed();
+	void CrouchReleased();
+	void SprintPressed();
+	void SprintReleased();
 
 private:
 	using pawn_type = ACharacterBase;
-	
 };

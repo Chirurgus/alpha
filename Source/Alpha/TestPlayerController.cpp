@@ -20,6 +20,11 @@ void ATestPlayerController::SetupInputComponent()
 		InputComponent->BindAction("Jump",IE_Released, this, &ATestPlayerController::JumpRelease);
 		InputComponent->BindAction("Shoot",IE_Pressed, this, &ATestPlayerController::ShootPressed);
 		InputComponent->BindAction("Shoot",IE_Released, this, &ATestPlayerController::ShootReleased);
+		InputComponent->BindAction("Crouch",IE_Pressed, this, &ATestPlayerController::CrouchPressed);
+		InputComponent->BindAction("Crouch",IE_Released, this, &ATestPlayerController::CrouchReleased);
+		InputComponent->BindAction("Sprint",IE_Pressed, this, &ATestPlayerController::SprintPressed);
+		InputComponent->BindAction("Sprint",IE_Released, this, &ATestPlayerController::SprintReleased);
+
 	}
 	//TODO: Handle if InputComponent is null
 }
@@ -59,7 +64,7 @@ void ATestPlayerController::MoveRight(float v)
 void ATestPlayerController::JumpPress()
 {
 	pawn_type* cp {Cast<pawn_type>(GetPawn())};
-	if (cp && !cp->IsJumping()) {
+	if (cp && !cp->IsJumpProvidingForce()) {// same as IsJumping
 		cp->Jump();
 	}
 }
@@ -76,10 +81,46 @@ void ATestPlayerController::ShootPressed()
 {
 	pawn_type* cp {Cast<pawn_type>(GetPawn())};
 	if (cp) {
-		cp->Shoot();
+		cp->ShootPressed();
 	}
  }
 
 void ATestPlayerController::ShootReleased()
 {
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->ShootReleased();
+	}
+}
+
+void ATestPlayerController::CrouchPressed()
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->CrouchPressed();
+	}
+}
+
+void ATestPlayerController::CrouchReleased()
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->CrouchReleased();
+	}
+}
+
+void ATestPlayerController::SprintPressed()
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->SprintPressed();
+	}
+}
+
+void ATestPlayerController::SprintReleased()
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->SprintReleased();
+	}
 }

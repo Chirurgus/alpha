@@ -14,6 +14,7 @@ class ALPHA_API ACharacterBase : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ACharacterBase();
+	ACharacterBase(const FObjectInitializer& obj_init);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,19 +23,30 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 
 	UFUNCTION()
-	void MoveForward(float v);
+	virtual void MoveForward(float v);
 	UFUNCTION()
-	void MoveRight(float v);
+	virtual void MoveRight(float v);
 	UFUNCTION()
-	void LookUp(float v);
+	virtual void LookUp(float v);
 	UFUNCTION()
-	void LookRight(float v);
+	virtual void LookRight(float v);
 	UFUNCTION()
-	void JumpPress();
+	virtual void JumpPress();
 	UFUNCTION()
-	void JumpRelease();
+	virtual void JumpRelease();
 	UFUNCTION()
-	void Shoot();
+	virtual void ShootPressed();
+	UFUNCTION()
+	virtual void ShootReleased();
+	UFUNCTION()
+	virtual void CrouchPressed();
+	UFUNCTION()
+	virtual void CrouchReleased();
+	UFUNCTION()
+	virtual void SprintPressed();
+	UFUNCTION()
+	virtual void SprintReleased();
+	
 	
 	UFUNCTION(BlueprintCallable, Category="Health")
 	void Die();
@@ -46,6 +58,9 @@ public:
 					 AActor* dmg_causer) override;
 	float TakeDamageTest(float damage);
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Camera)
+	UCameraComponent* _CameraComponent;
+
 protected:
 	UPROPERTY(EditAnywhere, Category=Projectile)
 	TSubclassOf<AProjectileBase> _ProjectileClass;
@@ -55,4 +70,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Status)
 	float _Health;
+
+ private:
+	bool _is_sprinting{false};
 };

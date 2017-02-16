@@ -12,6 +12,16 @@ ACharacterBase::ACharacterBase()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+ACharacterBase::ACharacterBase(const FObjectInitializer& obj_init)
+	: Super{obj_init}
+{
+	_CameraComponent =
+			 obj_init.CreateDefaultSubobject<UCameraComponent>(this,
+													 "_CameraComponent");	
+	_CameraComponent->SetupAttachment(GetCapsuleComponent());
+	GetMesh()->SetOwnerNoSee(true);
+}
+
 // Called when the game starts or when spawned
 void ACharacterBase::BeginPlay()
 {
@@ -74,7 +84,7 @@ void ACharacterBase::JumpRelease()
 	StopJumping();
 }
 
-void ACharacterBase::Shoot()
+void ACharacterBase::ShootPressed()
 {
 	if (_ProjectileClass) {
 		FVector camera_pos{};
@@ -97,6 +107,33 @@ void ACharacterBase::Shoot()
 			}
 		}
 	}
+}
+
+void ACharacterBase::ShootReleased()
+{
+}
+
+
+void ACharacterBase::CrouchPressed()
+{
+	Crouch();
+}
+
+void ACharacterBase::CrouchReleased()
+{
+	UnCrouch();
+}
+
+void ACharacterBase::SprintPressed()
+{
+	_is_sprinting = true;
+	GetCharacterMovement()->MaxWalkSpeed *= 2;
+}
+
+void ACharacterBase::SprintReleased()
+{
+	GetCharacterMovement()->MaxWalkSpeed /= 2;
+	_is_sprinting = false;
 }
 
 void ACharacterBase::Die()
