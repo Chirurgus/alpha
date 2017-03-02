@@ -20,6 +20,8 @@ ACharacterBase::ACharacterBase(const FObjectInitializer& obj_init)
 													 "_CameraComponent");	
 	_CameraComponent->SetupAttachment(GetCapsuleComponent());
 	GetMesh()->SetOwnerNoSee(true);
+	
+	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 }
 
 // Called when the game starts or when spawned
@@ -147,7 +149,7 @@ float ACharacterBase::TakeDamage(float damage,const FDamageEvent&,AController*,A
 {
 	if (damage) {
 		_Health -= damage;	
-		if (_Health < 0) {
+		if (_Health <= 0) {
 			Die();	
 		}
 	}
@@ -158,7 +160,7 @@ float ACharacterBase::TakeDamageTest(float damage)
 {
 	if (damage) {
 		_Health -= damage;	
-		if (_Health < 0) {
+		if (_Health <= 0) {
 			Die();	
 		}
 	}
