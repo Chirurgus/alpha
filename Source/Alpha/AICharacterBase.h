@@ -14,8 +14,12 @@ public:
 	// Sets default values for this character's properties
 	AAICharacterBase();
 
+	AAICharacterBase(const FObjectInitializer& obj_init);
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
 private:
+	UPROPERTY(EditAnywhere, Category=Perception)
+	class UAIPerceptionComponent* _PerceptionComp;
 };

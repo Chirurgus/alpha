@@ -12,8 +12,12 @@ UCLASS()
 class ALPHA_API AAIControllerBase : public AAIController
 {
 	GENERATED_BODY()
+public:
+	AAIControllerBase(const FObjectInitializer& obj_init);
 	
+	void Possess(APawn* puppet) override;
 	
-	
-	
+private:
+	UBlackboardComponent* _BlackboardComp;
+	UBehaviorTreeComponent* _BehaviorTreeComp;	
 };

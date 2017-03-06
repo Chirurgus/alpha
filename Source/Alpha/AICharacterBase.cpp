@@ -12,9 +12,14 @@ AAICharacterBase::AAICharacterBase()
 
 }
 
+AAICharacterBase::AAICharacterBase(const FObjectInitializer& obj_init)
+	: Super {obj_init}
+{
+	_PerceptionComp = obj_init.CreateDefaultSubobject<UAIPerceptionComponent>
+									(this, "PerceptionComponent");
+}
 // Called when the game starts or when spawned
 void AAICharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
