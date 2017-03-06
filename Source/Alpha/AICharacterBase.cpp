@@ -3,7 +3,6 @@
 #include "Alpha.h"
 #include "AICharacterBase.h"
 
-
 // Sets default values
 AAICharacterBase::AAICharacterBase()
 {
@@ -22,4 +21,9 @@ AAICharacterBase::AAICharacterBase(const FObjectInitializer& obj_init)
 void AAICharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+inline UAIPerceptionComponent* AAICharacterBase::GetPerceptionComponent()
+{
+	return _PerceptionComp;
 }

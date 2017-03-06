@@ -3,6 +3,8 @@
 #pragma once
 
 #include "AIController.h"
+#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "AIControllerBase.generated.h"
 
 /**
@@ -16,7 +18,9 @@ public:
 	AAIControllerBase(const FObjectInitializer& obj_init);
 	
 	void Possess(APawn* puppet) override;
-	
+protected:
+	UBlackboardComponent* GetBlackboardComponent();
+	UBehaviorTreeComponent* GetBehaviorTreeComponent();
 private:
 	UBlackboardComponent* _BlackboardComp;
 	UBehaviorTreeComponent* _BehaviorTreeComp;	

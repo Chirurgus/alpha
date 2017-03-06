@@ -22,4 +22,14 @@ void AAIControllerBase::Possess(APawn* puppet)
 	}
 }
 
+inline UBlackboardComponent* AAIControllerBase::GetBlackboardComponent()
+{
+	return _BlackboardComp;
+}
+
+inline UBehaviorTreeComponent* AAIControllerBase::GetBehaviorTreeComponent()
+{
+	return _BehaviorTreeComp;
+}
+
 

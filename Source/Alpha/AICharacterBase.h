@@ -3,7 +3,11 @@
 #pragma once
 
 #include "GameFramework/Character.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "AICharacterBase.generated.h"
+
+//Forward declarations
+//class UAIPerceptionComponent;
 
 UCLASS()
 class ALPHA_API AAICharacterBase : public ACharacter
@@ -18,8 +22,11 @@ public:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
+
+protected:
+	UAIPerceptionComponent* GetPerceptionComponent();
+
 private:
 	UPROPERTY(EditAnywhere, Category=Perception)
-	class UAIPerceptionComponent* _PerceptionComp;
+	UAIPerceptionComponent* _PerceptionComp;
 };
