@@ -2,6 +2,7 @@
 
 #include "Alpha.h"
 #include "AIControllerBase.h"
+#include "AIGuard.h"
 
 
 AAIControllerBase::AAIControllerBase(const FObjectInitializer& obj_init)
@@ -18,7 +19,11 @@ void AAIControllerBase::Possess(APawn* puppet)
 {
 	if (puppet) {
 		Super::Possess(puppet);
-		
+		AAIGuard* gp {Cast<AAIGuard>(puppet)};
+		if (gp) {
+			_BlackboardComp->
+				InitializeBlackboard(*(gp->GetBehaviorTree()->GetBlackboardComponent()->GetBlackboardAsset()));
+		}	
 	}
 }
 
@@ -31,5 +36,3 @@ inline UBehaviorTreeComponent* AAIControllerBase::GetBehaviorTreeComponent()
 {
 	return _BehaviorTreeComp;
 }
-
-

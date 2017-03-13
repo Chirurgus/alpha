@@ -14,16 +14,11 @@ AAICharacterBase::AAICharacterBase()
 AAICharacterBase::AAICharacterBase(const FObjectInitializer& obj_init)
 	: Super {obj_init}
 {
-	_PerceptionComp = obj_init.CreateDefaultSubobject<UAIPerceptionComponent>
-									(this, "PerceptionComponent");
-}
-// Called when the game starts or when spawned
-void AAICharacterBase::BeginPlay()
-{
-	Super::BeginPlay();
+	_BehaviorTreeComp = obj_init.CreateDefaultSubobject<UBehaviorTreeComponent>
+									(this, "BehaviorTreeComponent");
 }
 
-inline UAIPerceptionComponent* AAICharacterBase::GetPerceptionComponent()
+inline UBehaviorTreeComponent* AAICharacterBase::GetBehaviorTree()
 {
-	return _PerceptionComp;
+	return _BehaviorTreeComp;
 }

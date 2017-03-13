@@ -3,7 +3,8 @@
 #pragma once
 
 #include "GameFramework/Character.h"
-#include "Perception/AIPerceptionComponent.h"
+#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "AICharacterBase.generated.h"
 
 //Forward declarations
@@ -20,13 +21,10 @@ public:
 
 	AAICharacterBase(const FObjectInitializer& obj_init);
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-protected:
-	UAIPerceptionComponent* GetPerceptionComponent();
+	UBehaviorTreeComponent* GetBehaviorTree();
 
 private:
-	UPROPERTY(EditAnywhere, Category=Perception)
-	UAIPerceptionComponent* _PerceptionComp;
+	UPROPERTY(VisibleAnywhere, Category=Behavior)
+	UBehaviorTreeComponent* _BehaviorTreeComp;
+
 };
