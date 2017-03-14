@@ -20,7 +20,7 @@ public:
 	
 	virtual void OnPerception(TArray<AActor*> perceved_actors);
 
-public:
+private:
 	UPROPERTY(EditAnywhere, Category=Perception)
 	UAIPerceptionComponent* _PerceptionComp;
 	UPROPERTY(EditAnywhere, Category=Perception)

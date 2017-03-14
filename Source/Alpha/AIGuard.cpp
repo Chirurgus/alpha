@@ -11,9 +11,9 @@ AAIGuard::AAIGuard(const FObjectInitializer& obj_init)
 	_SightConfig = obj_init.CreateDefaultSubobject<UAISenseConfig_Sight>
 							(this, "SightConfig");
 	if (_PerceptionComp && _SightConfig) {
-		_SightConfig->SightRadius = 100;
-		_SightConfig->LoseSightRadius = 120;
-		_SightConfig->PeripheralVisionAngleDegrees = 360;
+		_SightConfig->SightRadius = 3000;
+		_SightConfig->LoseSightRadius = 3200;
+		_SightConfig->PeripheralVisionAngleDegrees = 90;
 		_SightConfig->DetectionByAffiliation.bDetectEnemies = true;
 		_SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
 		_SightConfig->DetectionByAffiliation.bDetectFriendlies = true;

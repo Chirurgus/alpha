@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Character.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "ProjectileBase.h"
 #include "CharacterBase.generated.h"
 
@@ -70,6 +71,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Status)
 	float _Health;
+
+	UPROPERTY(EditAnywhere, Category=Gameplay)
+	UAIPerceptionStimuliSourceComponent* _StimuliSourceComp;
 
  private:
 	bool _is_sprinting{false};
