@@ -65,15 +65,18 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, Category=Projectile)
 	TSubclassOf<AProjectileBase> _ProjectileClass;
+
+/*
+	UPROPERTY(EditAnywhere, Category="Perception")
+	UAIPerceptionStimuliSource	
+ */
 	
-	UPROPERTY(EditAnywhere, Category=Gameplay)
+	UPROPERTY(EditAnywhere, Category="Gameplay")
 	FVector _MuzzleOffset;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Status)
 	float _Health;
 
-	UPROPERTY(EditAnywhere, Category=Gameplay)
-	UAIPerceptionStimuliSourceComponent* _StimuliSourceComp;
 
  private:
 	bool _is_sprinting{false};

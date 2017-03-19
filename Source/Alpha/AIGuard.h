@@ -20,6 +20,11 @@ public:
 	
 	virtual void OnPerception(TArray<AActor*> perceved_actors);
 
+	//void PossessedBy(AController* cp) override;
+	UAIPerceptionComponent* GetPerceptionComponent();
+	void SetPerceptionComponent(UAIPerceptionComponent* p);
+	UAISenseConfig_Sight* GetSightConfig();
+	void SetSightConfig(UAISenseConfig_Sight* p);
 private:
 	UPROPERTY(EditAnywhere, Category=Perception)
 	UAIPerceptionComponent* _PerceptionComp;

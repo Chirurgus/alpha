@@ -5,6 +5,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "AIControllerBase.generated.h"
 
 /**
@@ -18,10 +19,11 @@ public:
 	AAIControllerBase(const FObjectInitializer& obj_init);
 	
 	void Possess(APawn* puppet) override;
+
 protected:
 	UBlackboardComponent* GetBlackboardComponent();
 	UBehaviorTreeComponent* GetBehaviorTreeComponent();
+	void SetBehaviorTreeComponent(UBehaviorTreeComponent* p);
 private:
-	UBlackboardComponent* _BlackboardComp;
 	UBehaviorTreeComponent* _BehaviorTreeComp;	
 };

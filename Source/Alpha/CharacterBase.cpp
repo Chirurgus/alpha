@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include "Perception/AIPerceptionSystem.h"
 #include "Perception/AISense_Sight.h"
+#include "Perception/AISenseConfig_Sight.h"
 #include "CharacterBase.h"
 
 
@@ -24,12 +25,11 @@ ACharacterBase::ACharacterBase(const FObjectInitializer& obj_init)
 	GetMesh()->SetOwnerNoSee(true);
 	
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
-	
-	_StimuliSourceComp = 
-		obj_init.CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(
-				this, "_StimuliSourceComponent");
-	_StimuliSourceComp->RegisterForSense(UAISense_Sight::StaticClass());
-	
+	//UAIPerceptionSystem::RegisterSource(*this);
+	//UAIPerceptionSystem::RegisterSourceForSenseClass
+	//			(UAISense_Sight::StaticClass(),this);
+	UAIPerceptionSystem::RegisterPerceptionStimuliSource
+				(this, UAISenseConfig_Sight::StaticClass(),this);
 }
 
 // Called when the game starts or when spawned

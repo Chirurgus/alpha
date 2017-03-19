@@ -16,7 +16,7 @@ class ALPHA_API ATestPlayerController : public APlayerController
 	GENERATED_BODY()
 
 	ATestPlayerController();
-	
+
 	void SetupInputComponent() override;
 
 	void MoveForward(float v);

@@ -18,7 +18,7 @@ AAICharacterBase::AAICharacterBase(const FObjectInitializer& obj_init)
 									(this, "BehaviorTreeComponent");
 }
 
-inline UBehaviorTreeComponent* AAICharacterBase::GetBehaviorTree()
+inline UBehaviorTreeComponent* AAICharacterBase::GetBehaviorTreeComponent()
 {
 	return _BehaviorTreeComp;
 }

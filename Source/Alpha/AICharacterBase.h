@@ -21,7 +21,7 @@ public:
 
 	AAICharacterBase(const FObjectInitializer& obj_init);
 
-	UBehaviorTreeComponent* GetBehaviorTree();
+	UBehaviorTreeComponent* GetBehaviorTreeComponent();
 
 private:
 	UPROPERTY(VisibleAnywhere, Category=Behavior)
