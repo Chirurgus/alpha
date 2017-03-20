@@ -28,8 +28,13 @@ ACharacterBase::ACharacterBase(const FObjectInitializer& obj_init)
 	//UAIPerceptionSystem::RegisterSource(*this);
 	//UAIPerceptionSystem::RegisterSourceForSenseClass
 	//			(UAISense_Sight::StaticClass(),this);
-	UAIPerceptionSystem::RegisterPerceptionStimuliSource
-				(this, UAISenseConfig_Sight::StaticClass(),this);
+	if (UAIPerceptionSystem::RegisterPerceptionStimuliSource
+				(this, UAISenseConfig_Sight::StaticClass(),this)) {
+		PRINT_DEBUG_MESSAGE("true");
+	}
+	else {
+		PRINT_DEBUG_MESSAGE("false");
+	}
 }
 
 // Called when the game starts or when spawned
