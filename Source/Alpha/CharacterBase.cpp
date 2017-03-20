@@ -30,10 +30,10 @@ ACharacterBase::ACharacterBase(const FObjectInitializer& obj_init)
 	//			(UAISense_Sight::StaticClass(),this);
 	if (UAIPerceptionSystem::RegisterPerceptionStimuliSource
 				(this, UAISenseConfig_Sight::StaticClass(),this)) {
-		PRINT_DEBUG_MESSAGE("true");
+	//	PRINT_DEBUG_MESSAGE("true");
 	}
 	else {
-		PRINT_DEBUG_MESSAGE("false");
+	//	PRINT_DEBUG_MESSAGE("false");
 	}
 }
 
