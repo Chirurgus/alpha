@@ -6,6 +6,7 @@
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Sight.h"
 #include "AIControllerBase.generated.h"
 
 /**
@@ -20,10 +21,17 @@ public:
 	
 	void Possess(APawn* puppet) override;
 
-protected:
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	UBlackboardComponent* GetBlackboardComponent();
+
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	UBehaviorTreeComponent* GetBehaviorTreeComponent();
+
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	void SetBehaviorTreeComponent(UBehaviorTreeComponent* p);
+
 private:
+	UPROPERTY(EditAnywhere, Category="Perception")
 	UBehaviorTreeComponent* _BehaviorTreeComp;	
+
 };

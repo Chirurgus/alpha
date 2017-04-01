@@ -17,17 +17,10 @@ class ALPHA_API AAIGuard : public AAICharacterBase
 
 public:	
 	AAIGuard(const FObjectInitializer& obj_init);
-	
+
+	UFUNCTION(BlueprintCallable,Category="Perception")	
 	virtual void OnPerception(TArray<AActor*> perceved_actors);
 
-	//void PossessedBy(AController* cp) override;
-	UAIPerceptionComponent* GetPerceptionComponent();
-	void SetPerceptionComponent(UAIPerceptionComponent* p);
-	UAISenseConfig_Sight* GetSightConfig();
-	void SetSightConfig(UAISenseConfig_Sight* p);
 private:
-	UPROPERTY(EditAnywhere, Category=Perception)
-	UAIPerceptionComponent* _PerceptionComp;
-	UPROPERTY(EditAnywhere, Category=Perception)
-	UAISenseConfig_Sight* _SightConfig;
+
 };

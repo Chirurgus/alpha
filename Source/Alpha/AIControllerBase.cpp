@@ -15,29 +15,21 @@ AAIControllerBase::AAIControllerBase(const FObjectInitializer& obj_init)
 		*/
 	Blackboard = obj_init.CreateDefaultSubobject<UBlackboardComponent>
 						(this, "BlackboardComponent");
-	PerceptionComponent = obj_init.CreateDefaultSubobject<UAIPerceptionComponent>
-						(this, "AIPerceptionComponent");
 }
 
 void AAIControllerBase::Possess(APawn* puppet)
 {
-	PRINT_DEBUG_MESSAGE("HI");
-	if (!GetBlackboardComponent() || 
-		!GetPerceptionComponent()) { PRINT_DEBUG_MESSAGE("NULL");return; }
+	if (!GetBlackboardComponent() || !GetPerceptionComponent()) {
+		return;
+	}
 	if (puppet) {
-		PRINT_DEBUG_MESSAGE("HELLO");
 		Super::Possess(puppet);
 		AAIGuard* gp {Cast<AAIGuard>(puppet)};
 		if (gp && gp->GetBehaviorTreeComponent()) {
-			gp->SetPerceptionComponent(GetPerceptionComponent());
    /*
 			GetBlackboardComponent()->
 				InitializeBlackboard(*(gp->GetBehaviorTreeComponent()->GetBlackboardComponent()->GetBlackboardAsset()));//blackboard component in behavior tree is null
 	*/
-			GetPerceptionComponent()->ConfigureSense(*(gp->GetSightConfig()));
-			GetPerceptionComponent()->
-				SetDominantSense(gp->GetSightConfig()->GetSenseImplementation());
-			GetPerceptionComponent()->OnPerceptionUpdated.AddDynamic(gp, &AAIGuard::OnPerception);
 		}	
 	}
 }
