@@ -15,7 +15,7 @@ class ALPHA_API ACharacterBase : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ACharacterBase();
-	ACharacterBase(const FObjectInitializer& obj_init);
+	//ACharacterBase(const FObjectInitializer& obj_init);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -49,32 +49,30 @@ public:
 	virtual void SprintReleased();
 	
 	
-	UFUNCTION(BlueprintCallable, Category="Health")
+	UFUNCTION(BlueprintCallable, Category = Health)
 	void Die();
 
-	UFUNCTION(BlueprintCallable, Category="Health")
+	UFUNCTION(BlueprintCallable, Category = Health)
 	float TakeDamage(float damage,
 				     const FDamageEvent& dmg_event,
 					 AController* dmg_instigator,
 					 AActor* dmg_causer) override;
 	float TakeDamageTest(float damage);
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Camera)
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Camera)
 	UCameraComponent* _CameraComponent;
 
-protected:
-	UPROPERTY(EditAnywhere, Category=Projectile)
-	TSubclassOf<AProjectileBase> _ProjectileClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
+	USpringArmComponent* _CameraBoonComponent;
 
-/*
-	UPROPERTY(EditAnywhere, Category="Perception")
-	UAIPerceptionStimuliSource	
- */
+	UPROPERTY(EditAnywhere, Category = Projectile)
+	TSubclassOf<AProjectileBase> _ProjectileClass;
 	
-	UPROPERTY(EditAnywhere, Category="Gameplay")
+	UPROPERTY(EditAnywhere, Category= Gameplay)
 	FVector _MuzzleOffset;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Status)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Health)
 	float _Health;
 
 

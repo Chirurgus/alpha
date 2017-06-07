@@ -7,34 +7,23 @@
 #include "Perception/AISenseConfig_Sight.h"
 #include "CharacterBase.h"
 
-
-// Sets default values
 ACharacterBase::ACharacterBase()
-{
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	: Super {}
+{ 	
+	// Set this character to call Tick() every frame. 
+	//You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-}
 
-ACharacterBase::ACharacterBase(const FObjectInitializer& obj_init)
-	: Super{obj_init}
-{
+	_CameraBoonComponent = 
+		CreateDefaultSubobject<USpringArmComponent>("Camera boon component");
 	_CameraComponent =
-			 obj_init.CreateDefaultSubobject<UCameraComponent>(this,
-													 "_CameraComponent");	
-	_CameraComponent->SetupAttachment(GetCapsuleComponent());
-	GetMesh()->SetOwnerNoSee(true);
+		 CreateDefaultSubobject<UCameraComponent>("Camera component");	
 	
-	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
-	//UAIPerceptionSystem::RegisterSource(*this);
-	//UAIPerceptionSystem::RegisterSourceForSenseClass
-	//			(UAISense_Sight::StaticClass(),this);
-	if (UAIPerceptionSystem::RegisterPerceptionStimuliSource
-				(this, UAISenseConfig_Sight::StaticClass(),this)) {
-	//	PRINT_DEBUG_MESSAGE("true");
-	}
-	else {
-	//	PRINT_DEBUG_MESSAGE("false");
-	}
+	_CameraBoonComponent->AttachTo(RootComponent);
+
+	_CameraComponent->AttachTo(_CameraBoonComponent);
+	
+	GetMesh()->SetOwnerNoSee(false);
 }
 
 // Called when the game starts or when spawned
@@ -47,7 +36,7 @@ void ACharacterBase::BeginPlay()
 // Called every frame
 void ACharacterBase::Tick( float DeltaTime )
 {
-	Super::Tick( DeltaTime );
+	Super::Tick(DeltaTime);
 
 }
 
