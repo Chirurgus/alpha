@@ -2,11 +2,12 @@
 
 #pragma once
 
-#include "GameFramework/Actor.h"
+#include "Weapon.h"
+#include "ProjectileBase.h"
 #include "GunBase.generated.h"
 
 UCLASS()
-class ALPHA_API AGunBase : public AActor
+class ALPHA_API AGunBase : public AWeapon
 {
 	GENERATED_BODY()
 	
@@ -14,12 +15,13 @@ public:
 	// Sets default values for this actor's properties
 	AGunBase();
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	
-	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
 
+	void Use() override;
+
+protected:
+	UPROPERTY(EditAnywhere, Category = "Gun")
+	TSubclassOf<AProjectileBase> _ProjectileClass;
 	
-	
+	UPROPERTY(EditAnywhere, Category = "Gun")
+	FVector _MuzzleOffset;	
 };

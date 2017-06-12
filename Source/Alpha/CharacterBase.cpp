@@ -2,6 +2,7 @@
 
 #include "Alpha.h"
 #include "Engine.h"
+#include "GunBase.h"
 #include "Perception/AIPerceptionSystem.h"
 #include "Perception/AISense_Sight.h"
 #include "Perception/AISenseConfig_Sight.h"
@@ -18,6 +19,8 @@ ACharacterBase::ACharacterBase()
 		CreateDefaultSubobject<USpringArmComponent>("Camera boon component");
 	_CameraComponent =
 		 CreateDefaultSubobject<UCameraComponent>("Camera component");	
+	_ActiveInventoryComponent = 
+		CreateDefaultSubobject<UActiveInventoryComponent>("Active inventory component");
 	
 	_CameraBoonComponent->AttachTo(RootComponent);
 
@@ -31,6 +34,20 @@ void ACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 	_Health = 1000;
+	
+	UWorld* world {GetWorld()};
+	if (world) {
+		FActorSpawnParameters sp;
+		sp.Owner = this;
+		AGunBase* gp {world->SpawnActor<AGunBase>(AGunBase::StaticClass(),
+												  GetActorLocation(),
+												  GetActorRotation(),
+												  sp)};
+		if (gp) {
+			gp->AttachRootComponentToActor(this);
+			_ActiveInventoryComponent->EquipWeapon(gp);
+		}
+	}
 }
 
 // Called every frame
@@ -90,6 +107,13 @@ void ACharacterBase::JumpRelease()
 
 void ACharacterBase::ShootPressed()
 {
+	AGunBase* gun
+		{Cast<AGunBase>(_ActiveInventoryComponent->GetEquippedWeapon())};
+	if (gun) {
+		gun->Use();
+	}
+
+	/*
 	if (_ProjectileClass) {
 		FVector camera_pos{};
 		FRotator camera_rot{};
@@ -111,6 +135,7 @@ void ACharacterBase::ShootPressed()
 			}
 		}
 	}
+	*/
 }
 
 void ACharacterBase::ShootReleased()

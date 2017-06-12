@@ -3,8 +3,8 @@
 #pragma once
 
 #include "GameFramework/Character.h"
-#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "ProjectileBase.h"
+#include "ActiveInventoryComponent.h"
 #include "CharacterBase.generated.h"
 
 UCLASS(Blueprintable)
@@ -49,10 +49,10 @@ public:
 	virtual void SprintReleased();
 	
 	
-	UFUNCTION(BlueprintCallable, Category = Health)
+	UFUNCTION(BlueprintCallable, Category = "Health")
 	void Die();
 
-	UFUNCTION(BlueprintCallable, Category = Health)
+	UFUNCTION(BlueprintCallable, Category = "Health")
 	float TakeDamage(float damage,
 				     const FDamageEvent& dmg_event,
 					 AController* dmg_instigator,
@@ -60,19 +60,24 @@ public:
 	float TakeDamageTest(float damage);
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Camera)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	UCameraComponent* _CameraComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	USpringArmComponent* _CameraBoonComponent;
 
-	UPROPERTY(EditAnywhere, Category = Projectile)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+	UActiveInventoryComponent* _ActiveInventoryComponent;
+
+	/*
+	UPROPERTY(EditAnywhere, Category = "Projectile")
 	TSubclassOf<AProjectileBase> _ProjectileClass;
 	
-	UPROPERTY(EditAnywhere, Category= Gameplay)
+	UPROPERTY(EditAnywhere, Category = "Gameplay")
 	FVector _MuzzleOffset;
+	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Health)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float _Health;
 
 

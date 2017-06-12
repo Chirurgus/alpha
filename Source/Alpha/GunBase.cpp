@@ -6,23 +6,41 @@
 
 // Sets default values
 AGunBase::AGunBase()
+	: Super {}
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+	/* Default projectile class */
+	_ProjectileClass = AProjectileBase::StaticClass();
+	_MuzzleOffset = FVector {0,0,0};
 }
 
-// Called when the game starts or when spawned
-void AGunBase::BeginPlay()
+void AGunBase::Use()
 {
-	Super::BeginPlay();
-	
-}
+	if (!_ProjectileClass) {
+		return;
+	}
 
-// Called every frame
-void AGunBase::Tick( float DeltaTime )
-{
-	Super::Tick( DeltaTime );
-
+	FVector camera_pos {GetActorLocation()};
+	FRotator camera_rot {GetActorRotation()};
+	//GetActorEyesViewPoint(camera_pos, camera_rot);
+	const FRotator muzzle_rot {camera_rot};
+	const FVector muzzle_pos {camera_pos
+		+ FTransform(camera_rot).TransformVector(_MuzzleOffset)};
+	UWorld* const world {GetWorld()};
+	if (world) {
+		FActorSpawnParameters spawn_param;
+		spawn_param.Owner = this;
+		spawn_param.Instigator = Instigator;
+		// spawn the projectile at the muzzle
+		AProjectileBase* const projectile
+			{world->SpawnActor<AProjectileBase>(_ProjectileClass,
+												muzzle_pos,
+												muzzle_rot,
+												spawn_param)};
+		if (projectile)
+		{
+			// find launch direction
+			projectile->InitVelocity(muzzle_rot.Vector());
+		}
+	}
 }
 
