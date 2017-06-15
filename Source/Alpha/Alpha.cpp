@@ -5,3 +5,6 @@
 
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, Alpha, "Alpha" );
  
+DEFINE_LOG_CATEGORY(ALog);
+
+DEFINE_LOG_CATEGORY(ALogCritical);

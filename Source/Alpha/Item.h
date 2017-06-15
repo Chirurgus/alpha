@@ -6,6 +6,10 @@
 #include "Interactable.h"
 #include "Item.generated.h"
 
+/*
+ * An Item, the base class for all items in the game.
+ * Implemets Interactable intefrace, this is used to pick items up.
+ */
 UCLASS()
 class ALPHA_API AItem : public AActor, public IInteractable
 {

@@ -7,7 +7,17 @@
 
 #define PRINT_DEBUG_MESSAGE(x) GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, x);
 
-namespace alpha {
+/*  ALog = Alpha Log
+	ALog is for general purpose logs
+	ALogCritical is for critical erros
+	*/
+
+DECLARE_LOG_CATEGORY_EXTERN(ALog, Log, All);
+
+DECLARE_LOG_CATEGORY_EXTERN(ALogCritical, Log, All);
+
+namespace alpha
+{
 }//namespace alpha
 
 #endif
