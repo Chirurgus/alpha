@@ -38,8 +38,19 @@ AWeapon* UActiveInventoryComponent::GetEquippedWeapon()
 	return _Weapon;
 }
 
-void UActiveInventoryComponent::EquipWeapon(AWeapon* w)
+bool UActiveInventoryComponent::EquipWeapon(AWeapon* w)
 {
+	UE_LOG(ALog, Log, TEXT("Trying to equip a weapon."));
+	if (!CanEquipWeapon(w)) {
+		return false;
+	}
 	_Weapon = w;
+	return true;
+}
+
+bool UActiveInventoryComponent::CanEquipWeapon(AWeapon * w)
+{
+	UE_LOG(ALog, Log, TEXT("Weapon can't be equipped."));
+	return w ? true : false;
 }
 

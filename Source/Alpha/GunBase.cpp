@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Alpha.h"
+#include "GunProjectile.h"
 #include "GunBase.h"
 
 
@@ -9,13 +10,14 @@ AGunBase::AGunBase()
 	: Super {}
 {
 	/* Default projectile class */
-	_ProjectileClass = AProjectileBase::StaticClass();
+	_ProjectileClass = AGunProjectile::StaticClass();
 	_MuzzleOffset = FVector {0,0,0};
 }
 
 void AGunBase::Use()
 {
 	if (!_ProjectileClass) {
+		UE_LOG(ALog, Warning, TEXT("ProjectileClass in AGunBase is null"));
 		return;
 	}
 
@@ -41,6 +43,12 @@ void AGunBase::Use()
 			// find launch direction
 			projectile->InitVelocity(muzzle_rot.Vector());
 		}
+		else {
+			UE_LOG(ALog, Warning, TEXT("SpawnActor() returned null"));
+		}
+	}
+	else {
+		UE_LOG(ALog, Warning, TEXT("GetWorld() returned null"));
 	}
 }
 

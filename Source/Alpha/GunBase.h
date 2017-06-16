@@ -6,6 +6,9 @@
 #include "ProjectileBase.h"
 #include "GunBase.generated.h"
 
+/*
+ * The base class for all Guns in the game. 
+ */
 UCLASS()
 class ALPHA_API AGunBase : public AWeapon
 {

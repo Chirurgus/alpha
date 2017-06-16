@@ -9,5 +9,5 @@ AVisualActor::AVisualActor()
 	: Super {},
 	_Mesh {CreateDefaultSubobject<UStaticMeshComponent>("Mesh Component")}
 {
-	
+	RootComponent = _Mesh;
 }

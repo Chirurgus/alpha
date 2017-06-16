@@ -10,6 +10,7 @@ AWeapon::AWeapon()
 
 void AWeapon::Use()
 {
+	UE_LOG(ALog, Log, TEXT("AWeapon is Use()d"));
 	return;
 }
 

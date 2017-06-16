@@ -10,23 +10,24 @@
 
 ACharacterBase::ACharacterBase()
 	: Super {}
+	, _CameraBoonComponent 
+		{CreateDefaultSubobject<USpringArmComponent>("Camera boon component")}
+	, _CameraComponent
+		{CreateDefaultSubobject<UCameraComponent>("Camera component")}
+	, _ActiveInventoryComponent
+		{CreateDefaultSubobject<UActiveInventoryComponent>("Active inventory component")}
 { 	
 	// Set this character to call Tick() every frame. 
 	//You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	_CameraBoonComponent = 
-		CreateDefaultSubobject<USpringArmComponent>("Camera boon component");
-	_CameraComponent =
-		 CreateDefaultSubobject<UCameraComponent>("Camera component");	
-	_ActiveInventoryComponent = 
-		CreateDefaultSubobject<UActiveInventoryComponent>("Active inventory component");
-	
 	_CameraBoonComponent->AttachTo(RootComponent);
 
 	_CameraComponent->AttachTo(_CameraBoonComponent);
 	
 	GetMesh()->SetOwnerNoSee(false);
+
+	this->OnActorBeginOverlap.AddDynamic(this, &ACharacterBase::OnBeginOverlapItem);
 }
 
 // Called when the game starts or when spawned
@@ -35,6 +36,7 @@ void ACharacterBase::BeginPlay()
 	Super::BeginPlay();
 	_Health = 1000;
 	
+	/*
 	UWorld* world {GetWorld()};
 	if (world) {
 		FActorSpawnParameters sp;
@@ -48,6 +50,7 @@ void ACharacterBase::BeginPlay()
 			_ActiveInventoryComponent->EquipWeapon(gp);
 		}
 	}
+	*/
 }
 
 // Called every frame
@@ -112,30 +115,9 @@ void ACharacterBase::ShootPressed()
 	if (gun) {
 		gun->Use();
 	}
-
-	/*
-	if (_ProjectileClass) {
-		FVector camera_pos{};
-		FRotator camera_rot{};
-		GetActorEyesViewPoint(camera_pos, camera_rot);
-		const FRotator muzzle_rot {camera_rot};
-		const FVector muzzle_pos {camera_pos + FTransform(camera_rot).TransformVector(_MuzzleOffset)};
-		UWorld* const world {GetWorld()};
-		if (world) {
-			FActorSpawnParameters spawn_param;
-			spawn_param.Owner = this;
-			spawn_param.Instigator = Instigator;
-			// spawn the projectile at the muzzle
-			AProjectileBase* const 
-				projectile {world->SpawnActor<AProjectileBase>(_ProjectileClass, muzzle_pos, muzzle_rot, spawn_param)};
-			if (projectile)
-			{
-				// find launch direction
-				projectile->InitVelocity(muzzle_rot.Vector());
-			}
-		}
+	else {
+		UE_LOG(ALog, Log, TEXT("No weapon equipped, can't fire."));
 	}
-	*/
 }
 
 void ACharacterBase::ShootReleased()
@@ -192,4 +174,19 @@ float ACharacterBase::TakeDamageTest(float damage)
 		}
 	}
 	return damage;
+}
+
+void ACharacterBase::OnBeginOverlapItem(AActor * my_actor, AActor * other_actor)
+{
+	UE_LOG(ALog, Log, TEXT("Overlapping an actor"));
+	AWeapon* item {Cast<AWeapon>(other_actor)};
+	if (!item) {
+		return;	
+	}
+	if (_ActiveInventoryComponent->EquipWeapon(item)) {
+		UE_LOG(ALog, Log, TEXT("Weapon equipped successfuly"));
+	}
+	else {
+		UE_LOG(ALog, Log, TEXT("Weapon was not equipped"));
+	}
 }

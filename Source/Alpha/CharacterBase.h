@@ -59,6 +59,9 @@ public:
 					 AActor* dmg_causer) override;
 	float TakeDamageTest(float damage);
 
+	UFUNCTION(Category = "Inventory")
+	void OnBeginOverlapItem(AActor* MyOverlappedActor, AActor* OtherActor);
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	UCameraComponent* _CameraComponent;

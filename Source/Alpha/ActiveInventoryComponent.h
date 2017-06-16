@@ -20,11 +20,18 @@ public:
 	virtual void BeginPlay() override;
 	
 	// Called every frame
-	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
+	virtual void TickComponent( float DeltaTime,
+							   ELevelTick TickType,
+							   FActorComponentTickFunction*
+							   ThisTickFunction ) override;
 
 	AWeapon* GetEquippedWeapon();
 
-	void EquipWeapon(AWeapon* w);
+	/* Tries to equip a weapon, returns true iff the weapon w was successfuly equipped */
+	bool EquipWeapon(AWeapon* w);
+
+	/* Checks if weapon w can be equipped */
+	bool CanEquipWeapon(AWeapon* w);
 
 private:
 	

@@ -34,6 +34,10 @@ public:
 	UFUNCTION()
 	virtual bool CanInteract() = 0;
 
+	/* Get the name of the object that the player wants to interact with,
+	 * should be used for on-screen indication what player is about to interact
+	 * with.
+	 */
 	UFUNCTION()
 	virtual FString GetInteractableName() = 0;
 };

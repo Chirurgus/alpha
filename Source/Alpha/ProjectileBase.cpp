@@ -10,27 +10,26 @@ AProjectileBase::AProjectileBase()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	
-}
 
-AProjectileBase::AProjectileBase(const FObjectInitializer& obj_init)
-	: Super{obj_init}
-{
-	_SphereComponent = obj_init.CreateDefaultSubobject<USphereComponent>(this, "ShpereComponent");		
- /*
+	_SphereComponent
+		= CreateDefaultSubobject<USphereComponent>("ShpereComponent");		
+	/*
 	_SphereComponent->InitSphereRadius(5.0f);
- */
+	*/
+	RootComponent = _SphereComponent;
 	
-	_MovementComponent = obj_init.CreateAbstractDefaultSubobject<UProjectileMovementComponent>(this, "MovementComponent");
+	_MovementComponent
+		= CreateDefaultSubobject<UProjectileMovementComponent> ("MovementComponent");
 	_MovementComponent->SetUpdatedComponent(_SphereComponent);
- /*
+	/*
 	_MovementComponent->InitialSpeed = 100.0f;
 	_MovementComponent->MaxSpeed = 20000.0f;
 	_MovementComponent->bRotationFollowsVelocity = true;
 	_MovementComponent->bShouldBounce = false;
- */
+	*/
 
 }
+
 // Called when the game starts or when spawned
 void AProjectileBase::BeginPlay()
 {
