@@ -60,7 +60,12 @@ public:
 	float TakeDamageTest(float damage);
 
 	UFUNCTION(Category = "Inventory")
-	void OnBeginOverlapItem(AActor* MyOverlappedActor, AActor* OtherActor);
+	void OnBeginOverlapItem(UPrimitiveComponent* comp,
+							AActor * other_actor,
+							UPrimitiveComponent* other_comop,
+							int32 other_body_index,
+							bool from_sweep,
+							const FHitResult& sweep_result);
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")

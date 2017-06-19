@@ -42,15 +42,17 @@ bool UActiveInventoryComponent::EquipWeapon(AWeapon* w)
 {
 	UE_LOG(ALog, Log, TEXT("Trying to equip a weapon."));
 	if (!CanEquipWeapon(w)) {
+		UE_LOG(ALog, Log, TEXT("Weapon can't be equipped."));
 		return false;
 	}
+	UE_LOG(ALog, Log, TEXT("Weapon was equipped."));
+	w->Equip(GetOwner());
 	_Weapon = w;
 	return true;
 }
 
 bool UActiveInventoryComponent::CanEquipWeapon(AWeapon * w)
 {
-	UE_LOG(ALog, Log, TEXT("Weapon can't be equipped."));
-	return w ? true : false;
+	return w != nullptr && w->CanEquip(GetOwner());
 }
 

@@ -17,6 +17,19 @@ class ALPHA_API AEquippable : public AItem
 	
 public:
 	
-	
-	
+	AEquippable();
+
+	/* Callback, called when this item is equipped. */
+	UFUNCTION()
+	virtual bool Equip(AActor* actor);
+
+	/* Callback, called when this item is unequipped. */
+	UFUNCTION()
+	virtual bool UnEquip();
+
+	UFUNCTION()
+	virtual bool CanEquip(AActor* actor);
+
+private:
+	AActor* _owner;
 };

@@ -27,7 +27,8 @@ ACharacterBase::ACharacterBase()
 	
 	GetMesh()->SetOwnerNoSee(false);
 
-	this->OnActorBeginOverlap.AddDynamic(this, &ACharacterBase::OnBeginOverlapItem);
+	GetCapsuleComponent()->OnComponentBeginOverlap
+		.AddDynamic(this, &ACharacterBase::OnBeginOverlapItem);
 }
 
 // Called when the game starts or when spawned
@@ -110,6 +111,7 @@ void ACharacterBase::JumpRelease()
 
 void ACharacterBase::ShootPressed()
 {
+
 	AGunBase* gun
 		{Cast<AGunBase>(_ActiveInventoryComponent->GetEquippedWeapon())};
 	if (gun) {
@@ -176,17 +178,17 @@ float ACharacterBase::TakeDamageTest(float damage)
 	return damage;
 }
 
-void ACharacterBase::OnBeginOverlapItem(AActor * my_actor, AActor * other_actor)
+void ACharacterBase::OnBeginOverlapItem(UPrimitiveComponent* comp,
+										AActor * other_actor,
+										UPrimitiveComponent* other_comop,
+										int32,
+										bool,
+										const FHitResult&)
 {
 	UE_LOG(ALog, Log, TEXT("Overlapping an actor"));
 	AWeapon* item {Cast<AWeapon>(other_actor)};
 	if (!item) {
 		return;	
 	}
-	if (_ActiveInventoryComponent->EquipWeapon(item)) {
-		UE_LOG(ALog, Log, TEXT("Weapon equipped successfuly"));
-	}
-	else {
-		UE_LOG(ALog, Log, TEXT("Weapon was not equipped"));
-	}
+	_ActiveInventoryComponent->EquipWeapon(item);
 }

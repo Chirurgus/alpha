@@ -25,18 +25,20 @@ public:
 							   FActorComponentTickFunction*
 							   ThisTickFunction ) override;
 
+	UFUNCTION()
 	AWeapon* GetEquippedWeapon();
 
 	/* Tries to equip a weapon, returns true iff the weapon w was successfuly equipped */
+	UFUNCTION()
 	bool EquipWeapon(AWeapon* w);
 
 	/* Checks if weapon w can be equipped */
+	UFUNCTION()
 	bool CanEquipWeapon(AWeapon* w);
 
 private:
 	
 	UPROPERTY()
 	AWeapon* _Weapon;
-		
 	
 };

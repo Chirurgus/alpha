@@ -16,6 +16,8 @@ AGunBase::AGunBase()
 
 void AGunBase::Use()
 {
+
+	UE_LOG(ALog, Log, TEXT("Fireing."));
 	if (!_ProjectileClass) {
 		UE_LOG(ALog, Warning, TEXT("ProjectileClass in AGunBase is null"));
 		return;
