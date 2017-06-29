@@ -3,21 +3,25 @@
 #pragma once
 
 #include "GameFramework/PlayerController.h"
-#include "AlphaCharacter.h"
 #include "CharacterBase.h"
-#include "TestPlayerController.generated.h"
+#include "ThirdPersonCameraActor.h"
+#include "PlayerControllerBase.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class ALPHA_API ATestPlayerController : public APlayerController
+UCLASS(Blueprintable)
+class ALPHA_API APlayerControllerBase : public APlayerController
 {
 	GENERATED_BODY()
 
-	ATestPlayerController();
+	APlayerControllerBase();
 
 	void SetupInputComponent() override;
+	
+	void Possess(APawn* pawn) override;
+
+	void SetupCamera();
 
 	void MoveForward(float v);
 	void MoveRight(float v);
@@ -31,6 +35,10 @@ class ALPHA_API ATestPlayerController : public APlayerController
 	void CrouchReleased();
 	void SprintPressed();
 	void SprintReleased();
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	AThirdPersonCameraActor* _CameraActor;
 
 private:
 	using pawn_type = ACharacterBase;

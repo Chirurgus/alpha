@@ -5,7 +5,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "AlphaCharacter.h"
 #include "CharacterBase.h"
-#include "TestPlayerController.h"
+#include "PlayerControllerBase.h"
 #include "AlphaGameModeBase.generated.h"
 
 /**

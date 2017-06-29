@@ -68,11 +68,13 @@ public:
 							const FHitResult& sweep_result);
 
 protected:
+	/*
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	UCameraComponent* _CameraComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	USpringArmComponent* _CameraBoonComponent;
+	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	UActiveInventoryComponent* _ActiveInventoryComponent;
