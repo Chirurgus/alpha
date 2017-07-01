@@ -3,17 +3,14 @@
 #include "Alpha.h"
 #include "Engine.h"
 #include "GunBase.h"
-#include "Perception/AIPerceptionSystem.h"
-#include "Perception/AISense_Sight.h"
-#include "Perception/AISenseConfig_Sight.h"
 #include "CharacterBase.h"
 
 ACharacterBase::ACharacterBase()
 	: Super {}
-	, _CameraBoonComponent 
+	/*, _CameraBoonComponent 
 		{CreateDefaultSubobject<USpringArmComponent>("Camera boon component")}
 	, _CameraComponent
-		{CreateDefaultSubobject<UCameraComponent>("Camera component")}
+		{CreateDefaultSubobject<UCameraComponent>("Camera component")}*/
 	, _ActiveInventoryComponent
 		{CreateDefaultSubobject<UActiveInventoryComponent>("Active inventory component")}
 { 	
@@ -21,9 +18,11 @@ ACharacterBase::ACharacterBase()
 	//You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	/*
 	_CameraBoonComponent->AttachTo(RootComponent);
 
 	_CameraComponent->AttachTo(_CameraBoonComponent);
+	*/
 	
 	GetMesh()->SetOwnerNoSee(false);
 
