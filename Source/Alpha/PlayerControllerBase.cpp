@@ -13,6 +13,8 @@ APlayerControllerBase::APlayerControllerBase()
 	*/
 {
 	SetupCamera();
+
+	IgnoreLookInput = false;
 }
 
 void APlayerControllerBase::SetupInputComponent()
@@ -65,6 +67,15 @@ void APlayerControllerBase::Possess(APawn * pawn)
 	PlayerCameraManager->ViewTarget.Target = _CameraActor;
 }
 
+void APlayerControllerBase::UnPossess()
+{
+	/* TODO:
+		Maybe this should be handled differently, perhaps, the actor
+		sould be unspawned.
+	*/
+	_CameraActor = nullptr;
+}
+
 void APlayerControllerBase::SetupCamera()
 {
 	//PlayerCameraManagerClass = ACameraManager::StaticClass();
@@ -79,17 +90,22 @@ void APlayerControllerBase::SetupCamera()
 
 void APlayerControllerBase::LookUp(float v)
 {
-	pawn_type* cp {Cast<pawn_type>(GetPawn())};
-	if (cp) {
-		cp->LookUp(v);
+	if (v != 0) {
+		//This does nothing, I don't konw why.
+		//AddPitchInput(v);	
+		_CameraActor->AddActorLocalRotation(FRotator {InputPitchScale * -v, 0, 0});
+		/*
+		_CameraActor->SetActorRotation(
+			_CameraActor->GetActorRotation() + FRotator {InputPitchScale * v, 0, 0}
+		);
+		*/
 	}
 }
 
 void APlayerControllerBase::LookRight(float v)
 {
-	pawn_type* cp {Cast<pawn_type>(GetPawn())};
-	if (cp) {
-		cp->LookRight(v);
+	if (v != 0) {
+		AddYawInput(v);
 	}
 }
 

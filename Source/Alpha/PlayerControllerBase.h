@@ -20,6 +20,7 @@ class ALPHA_API APlayerControllerBase : public APlayerController
 	void SetupInputComponent() override;
 	
 	void Possess(APawn* pawn) override;
+	void UnPossess() override;
 
 	void SetupCamera();
 
