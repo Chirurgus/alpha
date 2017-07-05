@@ -65,6 +65,31 @@ void APlayerControllerBase::Possess(APawn * pawn)
 	PlayerCameraManager->ViewTarget.Target = _CameraActor;
 }
 
+void APlayerControllerBase::UnPossess()
+{
+	/* TODO:
+		Maybe this should be handled differently, perhaps, the actor
+		sould be unspawned.
+	*/
+	_CameraActor = nullptr;
+}
+
+void APlayerControllerBase::ProcessPlayerInput(const float d_time,const bool game_paused)
+{
+	FRotator in_rotation {RotationInput};
+
+	
+	if (_CameraActor) {
+		RotationInput.Pitch = 0;
+		Super::ProcessPlayerInput(d_time, game_paused);
+		_CameraActor->AddActorWorldRotation(FRotator {in_rotation.Pitch, 0, 0});
+	}
+	else {
+		RotationInput = in_rotation;
+		Super::ProcessPlayerInput(d_time, game_paused);
+	}
+}
+
 void APlayerControllerBase::SetupCamera()
 {
 	//PlayerCameraManagerClass = ACameraManager::StaticClass();
@@ -79,10 +104,13 @@ void APlayerControllerBase::SetupCamera()
 
 void APlayerControllerBase::LookUp(float v)
 {
+	AddPitchInput(v);	
+	/*
 	pawn_type* cp {Cast<pawn_type>(GetPawn())};
 	if (cp) {
 		cp->LookUp(v);
 	}
+	*/
 }
 
 void APlayerControllerBase::LookRight(float v)
