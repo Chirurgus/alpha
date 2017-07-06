@@ -13,6 +13,8 @@ APlayerControllerBase::APlayerControllerBase()
 	*/
 {
 	SetupCamera();
+
+	IgnoreLookInput = false;
 }
 
 void APlayerControllerBase::SetupInputComponent()
@@ -74,22 +76,6 @@ void APlayerControllerBase::UnPossess()
 	_CameraActor = nullptr;
 }
 
-void APlayerControllerBase::ProcessPlayerInput(const float d_time,const bool game_paused)
-{
-	FRotator in_rotation {RotationInput};
-
-	
-	if (_CameraActor) {
-		RotationInput.Pitch = 0;
-		Super::ProcessPlayerInput(d_time, game_paused);
-		_CameraActor->AddActorWorldRotation(FRotator {in_rotation.Pitch, 0, 0});
-	}
-	else {
-		RotationInput = in_rotation;
-		Super::ProcessPlayerInput(d_time, game_paused);
-	}
-}
-
 void APlayerControllerBase::SetupCamera()
 {
 	//PlayerCameraManagerClass = ACameraManager::StaticClass();
@@ -104,20 +90,22 @@ void APlayerControllerBase::SetupCamera()
 
 void APlayerControllerBase::LookUp(float v)
 {
-	AddPitchInput(v);	
-	/*
-	pawn_type* cp {Cast<pawn_type>(GetPawn())};
-	if (cp) {
-		cp->LookUp(v);
+	if (v != 0) {
+		//This does nothing, I don't konw why.
+		//AddPitchInput(v);	
+		_CameraActor->AddActorLocalRotation(FRotator {InputPitchScale * -v, 0, 0});
+		/*
+		_CameraActor->SetActorRotation(
+			_CameraActor->GetActorRotation() + FRotator {InputPitchScale * v, 0, 0}
+		);
+		*/
 	}
-	*/
 }
 
 void APlayerControllerBase::LookRight(float v)
 {
-	pawn_type* cp {Cast<pawn_type>(GetPawn())};
-	if (cp) {
-		cp->LookRight(v);
+	if (v != 0) {
+		AddYawInput(v);
 	}
 }
 

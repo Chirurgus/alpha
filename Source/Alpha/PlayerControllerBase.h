@@ -22,7 +22,6 @@ class ALPHA_API APlayerControllerBase : public APlayerController
 	void Possess(APawn* pawn) override;
 	void UnPossess() override;
 
-	void ProcessPlayerInput(const float d_time, const bool game_paused) override;
 	void SetupCamera();
 
 	void MoveForward(float v);
