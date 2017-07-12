@@ -62,7 +62,7 @@ void APlayerControllerBase::Possess(APawn * pawn)
 		}
 	}
 	_CameraActor->AttachRootComponentToActor(pawn);
-	//_CameraActor->SetActorRelativeLocation({0,0,0});
+	_CameraActor->SetActorRelativeLocation(FVector {0, 0, 80});
 	//PlayerCameraManager->SetViewTarget(_CameraActor, FViewTargetTransitionParams {});
 	PlayerCameraManager->ViewTarget.Target = _CameraActor;
 }
@@ -91,14 +91,9 @@ void APlayerControllerBase::SetupCamera()
 void APlayerControllerBase::LookUp(float v)
 {
 	if (v != 0) {
-		//This does nothing, I don't konw why.
+		//See "Fix the 3rd person camers" issue discussion for explanation.
 		//AddPitchInput(v);	
 		_CameraActor->AddActorLocalRotation(FRotator {InputPitchScale * -v, 0, 0});
-		/*
-		_CameraActor->SetActorRotation(
-			_CameraActor->GetActorRotation() + FRotator {InputPitchScale * v, 0, 0}
-		);
-		*/
 	}
 }
 
@@ -106,6 +101,7 @@ void APlayerControllerBase::LookRight(float v)
 {
 	if (v != 0) {
 		AddYawInput(v);
+		//_CameraActor->AddActorLocalRotation(FRotator {0, InputYawScale * v, 0});
 	}
 }
 
