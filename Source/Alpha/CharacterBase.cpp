@@ -34,7 +34,7 @@ ACharacterBase::ACharacterBase()
 void ACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	_Health = 1000;
+	_Health = GetMaxHealh();
 	
 	/*
 	UWorld* world {GetWorld()};
@@ -148,11 +148,21 @@ void ACharacterBase::SprintReleased()
 	_is_sprinting = false;
 }
 
+float ACharacterBase::GetHealth() const
+{
+	return _Health;
+}
+
+float ACharacterBase::GetMaxHealh() const
+{
+	return 1000.0f;
+}
+
 void ACharacterBase::Die()
 {
-	AController* contoller {GetController()};
-	contoller->UnPossess();
 	PRINT_DEBUG_MESSAGE("YOU DIED");
+	PRINT_DEBUG_MESSAGE("OH, DON'T CRY, HERE, HAVE ANOTHER TRY!");
+	_Health = GetMaxHealh();
 }
 
 float ACharacterBase::TakeDamage(float damage,const FDamageEvent&,AController*,AActor*)
@@ -191,3 +201,4 @@ void ACharacterBase::OnBeginOverlapItem(UPrimitiveComponent* comp,
 	}
 	_ActiveInventoryComponent->EquipWeapon(item);
 }
+

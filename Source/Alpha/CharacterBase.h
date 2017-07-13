@@ -50,6 +50,12 @@ public:
 	
 	
 	UFUNCTION(BlueprintCallable, Category = "Health")
+	float GetHealth() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	float GetMaxHealh() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Health")
 	void Die();
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
