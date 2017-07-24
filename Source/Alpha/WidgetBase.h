@@ -15,5 +15,5 @@ class ALPHA_API UWidgetBase : public UUserWidget
 
 public:
 	UWidgetBase(const FObjectInitializer& obj_init);
-	
+
 };
