@@ -18,5 +18,8 @@ public:
 	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UArrowComponent* _ArrowComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	UStaticMeshComponent* _Mesh;
 };

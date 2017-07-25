@@ -9,7 +9,7 @@
 /*
  * The base class for all Guns in the game. 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class ALPHA_API AGunBase : public AWeapon
 {
 	GENERATED_BODY()
@@ -25,6 +25,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Gun")
 	TSubclassOf<AProjectileBase> _ProjectileClass;
 	
-	UPROPERTY(EditAnywhere, Category = "Gun")
+	UPROPERTY(EditAnywhere, Category = "Gun", Meta = (MakeEditWidget = true))
 	FVector _MuzzleOffset;	
+
+	UPROPERTY(EditAnywhere, Category = "Gun", Meta = (MakeEditWidget = true))
+	FRotator _FireVector;
 };

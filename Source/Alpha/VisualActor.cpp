@@ -6,8 +6,17 @@
 
 // Sets default values
 AVisualActor::AVisualActor()
-	: Super {},
-	_Mesh {CreateDefaultSubobject<UStaticMeshComponent>("Mesh Component")}
+	: Super {}
+	, _Mesh {CreateDefaultSubobject<UStaticMeshComponent>("Mesh Component")}
+	, _ArrowComponent {CreateDefaultSubobject<UArrowComponent>("Arrow Component")}
 {
-	RootComponent = _Mesh;
+	SetRootComponent(_ArrowComponent);
+	_Mesh->AttachToComponent(RootComponent,
+							 FAttachmentTransformRules {
+								EAttachmentRule::KeepRelative,
+								EAttachmentRule::KeepRelative,
+								EAttachmentRule::KeepRelative,
+								false
+							}
+	);
 }

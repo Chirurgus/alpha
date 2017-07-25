@@ -8,10 +8,10 @@
 // Sets default values
 AGunBase::AGunBase()
 	: Super {}
+	, _ProjectileClass {AGunProjectile::StaticClass()}
+	, _MuzzleOffset {0,0,0}
+	, _FireVector {0, 90, 0}
 {
-	/* Default projectile class */
-	_ProjectileClass = AGunProjectile::StaticClass();
-	_MuzzleOffset = FVector {0,0,0};
 }
 
 void AGunBase::Use()
@@ -23,12 +23,16 @@ void AGunBase::Use()
 		return;
 	}
 
+	/*
 	FVector camera_pos {GetActorLocation()};
 	FRotator camera_rot {GetActorRotation()};
 	//GetActorEyesViewPoint(camera_pos, camera_rot);
 	const FRotator muzzle_rot {camera_rot};
 	const FVector muzzle_pos {camera_pos
 		+ FTransform(camera_rot).TransformVector(_MuzzleOffset)};
+		*/
+	FVector muzzle_pos {GetRootComponent()->GetComponentLocation() + _MuzzleOffset};
+	FRotator fire_vect {GetRootComponent()->GetComponentRotation() + _FireVector};
 	UWorld* const world {GetWorld()};
 	if (world) {
 		FActorSpawnParameters spawn_param;
@@ -38,12 +42,12 @@ void AGunBase::Use()
 		AProjectileBase* const projectile
 			{world->SpawnActor<AProjectileBase>(_ProjectileClass,
 												muzzle_pos,
-												muzzle_rot,
+												fire_vect,
 												spawn_param)};
 		if (projectile)
 		{
 			// find launch direction
-			projectile->InitVelocity(muzzle_rot.Vector());
+			projectile->InitVelocity(fire_vect.Vector());
 		}
 		else {
 			UE_LOG(ALog, Warning, TEXT("SpawnActor() returned null"));

@@ -15,7 +15,6 @@ void AHUDBase::BeginPlay()
 
 	_WidgetBase = CreateWidget<UWidgetBase>(GetWorld(), WidgetBaseClass);
 	if (_WidgetBase) {
-		UE_LOG(ALog, Warning, TEXT("Drawing BasicHUD Widget"));
 		_WidgetBase->AddToViewport();
 	}
 	else {
