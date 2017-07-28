@@ -19,6 +19,7 @@ class ALPHA_API APlayerControllerBase : public APlayerController
 
 	void SetupInputComponent() override;
 	
+	void BeginPlay() override;
 	void Possess(APawn* pawn) override;
 	void UnPossess() override;
 
@@ -36,6 +37,9 @@ class ALPHA_API APlayerControllerBase : public APlayerController
 	void CrouchReleased();
 	void SprintPressed();
 	void SprintReleased();
+
+	void OpenPauseMenu();
+	void ClosePauseMenu();
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
