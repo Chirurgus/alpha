@@ -25,19 +25,19 @@ public:
 							   FActorComponentTickFunction*
 							   ThisTickFunction ) override;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	AWeapon* GetEquippedWeapon();
 
 	/* Tries to equip a weapon, returns true iff the weapon w was successfuly equipped */
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	bool EquipWeapon(AWeapon* w);
 
 	/* Checks if weapon w can be equipped */
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	bool CanEquipWeapon(AWeapon* w);
 
 private:
-	
+
 	UPROPERTY()
 	AWeapon* _Weapon;
 	
