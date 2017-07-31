@@ -16,17 +16,19 @@ bool AEquippable::Equip(AActor* actor)
 		UE_LOG(ALog, Log, TEXT("This actor can't equip this item"));
 		return false;
 	}
-	SetActorTickEnabled(false);
-	SetActorHiddenInGame(true);
-	SetActorEnableCollision(false);
+	
 	_owner = actor;
+	SetActorEnableCollision(false);
+	AttachToComponent(Cast<ACharacter>(_owner)->GetMesh(),
+					  FAttachmentTransformRules::KeepRelativeTransform,
+					  "RightHandSocket");
+	SetActorRelativeLocation(FVector {0,0,0});
+	
 	return true;
 }
 
 bool AEquippable::UnEquip()
 {
-	SetActorTickEnabled(true);
-	SetActorHiddenInGame(false);
 	SetActorEnableCollision(true);
 	_owner = nullptr;
 	return true;
@@ -34,7 +36,12 @@ bool AEquippable::UnEquip()
 
 bool AEquippable::CanEquip(AActor* actor)
 {
-	return actor != nullptr;
+	return !IsEquipped() && actor != nullptr;
+}
+
+bool AEquippable::IsEquipped()
+{
+	return _owner != nullptr;
 }
 
 

@@ -20,6 +20,8 @@ public:
 	
 	void BeginPlay() override;
 
+	AActor* GetOwner() const;
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UWidgetBase> WidgetBaseClass;
