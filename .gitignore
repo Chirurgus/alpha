@@ -3,6 +3,7 @@ DerivedDataCache
 Intermediate
 Saved
 ipch
+.vs
 *.VC.db
 *.opensdf
 *.opendb

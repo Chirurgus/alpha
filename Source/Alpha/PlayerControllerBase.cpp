@@ -1,7 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Alpha.h"
+
 #include "CameraManager.h"
+
+#include "HUDBase.h"
+#include "WidgetBase.h"
+#include "BasicHUDWidget.h"
+#include "PauseMenuWidget.h"
+
 #include "PlayerControllerBase.h"
 
 APlayerControllerBase::APlayerControllerBase()
@@ -33,9 +40,28 @@ void APlayerControllerBase::SetupInputComponent()
 		InputComponent->BindAction("Crouch",IE_Released, this, &APlayerControllerBase::CrouchReleased);
 		InputComponent->BindAction("Sprint",IE_Pressed, this, &APlayerControllerBase::SprintPressed);
 		InputComponent->BindAction("Sprint",IE_Released, this, &APlayerControllerBase::SprintReleased);
+		InputComponent->BindAction("Open PauseMenu",IE_Pressed, this, &APlayerControllerBase::OpenPauseMenu);
+		InputComponent->BindAction("Open PauseMenu",IE_Released, this, &APlayerControllerBase::ClosePauseMenu);
 
 	}
-	//TODO: Handle if InputComponent is null
+	else {
+		UE_LOG(ALog, Warning, TEXT("InputComponent is null"));
+	}
+}
+
+void APlayerControllerBase::BeginPlay()
+{
+	AHUDBase* hud {Cast<AHUDBase>(GetHUD())};
+	if (hud) {
+		hud->AddToCategory(
+			EUiCategory::HUD,
+			FName {"BasicHUD"}
+		);
+		hud->ShowUi(EUiCategory::HUD);
+	}
+	else {
+		UE_LOG(ALog, Warning, TEXT("Can't cast GetHUD() to AHUDBase"));
+	}
 }
 
 void APlayerControllerBase::Possess(APawn * pawn)
@@ -183,4 +209,26 @@ void APlayerControllerBase::SprintReleased()
 	if (cp) {
 		cp->SprintReleased();
 	}
+}
+
+void APlayerControllerBase::OpenPauseMenu()
+{
+	SetPause(true);
+	AHUDBase* hud {Cast<AHUDBase>(GetHUD())};
+	if (hud) {
+		hud->AddToCategory(
+			EUiCategory::PauseMenu,
+			FName {"PauseMenu"}
+		);
+		hud->ShowUi(EUiCategory::PauseMenu);
+	}
+	else {
+		UE_LOG(ALog, Warning, TEXT("Can't cast GetHUD() to AHUDBase"));
+	}
+
+}
+
+void APlayerControllerBase::ClosePauseMenu()
+{
+	SetPause(false);
 }
