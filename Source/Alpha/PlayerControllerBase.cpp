@@ -40,8 +40,8 @@ void APlayerControllerBase::SetupInputComponent()
 		InputComponent->BindAction("Crouch",IE_Released, this, &APlayerControllerBase::CrouchReleased);
 		InputComponent->BindAction("Sprint",IE_Pressed, this, &APlayerControllerBase::SprintPressed);
 		InputComponent->BindAction("Sprint",IE_Released, this, &APlayerControllerBase::SprintReleased);
-		InputComponent->BindAction("Open PauseMenu",IE_Pressed, this, &APlayerControllerBase::OpenPauseMenu);
-		InputComponent->BindAction("Open PauseMenu",IE_Released, this, &APlayerControllerBase::ClosePauseMenu);
+		InputComponent->BindAction("PauseMenu",IE_Pressed, this, &APlayerControllerBase::OpenPauseMenu);
+		InputComponent->BindAction("PauseMenu",IE_Released, this, &APlayerControllerBase::ClosePauseMenu);
 
 	}
 	else {
@@ -53,10 +53,12 @@ void APlayerControllerBase::BeginPlay()
 {
 	AHUDBase* hud {Cast<AHUDBase>(GetHUD())};
 	if (hud) {
-		hud->AddToCategory(
-			EUiCategory::HUD,
-			FName {"BasicHUD"}
-		);
+		if (!hud->IsWidgetInCategory(EUiCategory::HUD, FName {"BasicHUD"})) {
+			hud->AddToCategory(
+				EUiCategory::HUD,
+				FName {"BasicHUD"}
+			);
+		}
 		hud->ShowUi(EUiCategory::HUD);
 	}
 	else {
@@ -213,13 +215,16 @@ void APlayerControllerBase::SprintReleased()
 
 void APlayerControllerBase::OpenPauseMenu()
 {
-	SetPause(true);
+	//SetPause(true);
 	AHUDBase* hud {Cast<AHUDBase>(GetHUD())};
 	if (hud) {
-		hud->AddToCategory(
-			EUiCategory::PauseMenu,
-			FName {"PauseMenu"}
-		);
+		if (!hud->IsWidgetInCategory(EUiCategory::PauseMenu, FName {"PauseMenu"})) {
+			hud->AddToCategory(
+				EUiCategory::PauseMenu,
+				FName {"PauseMenu"}
+			);
+		}
+		hud->HideUi(EUiCategory::HUD);
 		hud->ShowUi(EUiCategory::PauseMenu);
 	}
 	else {
@@ -230,5 +235,14 @@ void APlayerControllerBase::OpenPauseMenu()
 
 void APlayerControllerBase::ClosePauseMenu()
 {
-	SetPause(false);
+	//SetPause(false);
+	AHUDBase* hud {Cast<AHUDBase>(GetHUD())};
+	if (hud) {
+		hud->HideUi(EUiCategory::PauseMenu);
+		hud->ShowUi(EUiCategory::HUD);
+	}
+	else {
+		UE_LOG(ALog, Warning, TEXT("Can't cast GetHUD() to AHUDBase"));
+	}
+
 }

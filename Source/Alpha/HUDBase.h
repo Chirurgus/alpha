@@ -42,6 +42,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	bool RemoveFromCategory(EUiCategory category, FName registered_widget_type);
 
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	bool IsWidgetInCategory(EUiCategory category, FName registered_widget_type);
+
 	/* Remove the last Widget added to the category*/
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	bool RemoveLastFromCategory(EUiCategory category);

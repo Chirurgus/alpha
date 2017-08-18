@@ -74,6 +74,25 @@ bool AHUDBase::RemoveFromCategory(EUiCategory category, FName type)
 
 	return true;
 }
+
+bool AHUDBase::IsWidgetInCategory(EUiCategory category, FName type)
+{
+	TSubclassOf<UWidgetBase> widget_type {GetRegisteredWidgetClass(type)};
+
+	if (!widget_type) {
+		return false;
+	}
+
+	TArray<UWidgetBase*>& widget_array {getWidgetArray(category)};
+
+	for (auto it {widget_array.CreateIterator()}; it; ++it) {
+		if ((*it)->IsA(widget_type)) {
+			return true;
+		}
+	}
+
+	return false;
+}
 	
 
 bool AHUDBase::RemoveLastFromCategory(EUiCategory category)
