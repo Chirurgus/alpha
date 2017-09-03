@@ -5,6 +5,8 @@
 
 
 AItem::AItem()
+	: _xsize {1}
+	, _ysize {1}
 {
 }
 
@@ -21,4 +23,14 @@ bool AItem::CanInteract()
 FString AItem::GetInteractableName()
 {
 	return FString {"An Item"};
+}
+
+inline uint8 AItem::GetXSize()
+{
+	return _xsize;
+}
+
+inline uint8 AItem::GetYSize()
+{
+	return _ysize;
 }

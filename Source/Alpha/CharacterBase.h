@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "ProjectileBase.h"
 #include "ActiveInventoryComponent.h"
+#include "InventoryComponent.h"
 #include "CharacterBase.generated.h"
 
 UCLASS(Blueprintable)
@@ -84,6 +85,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	UActiveInventoryComponent* _ActiveInventoryComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+	UInventoryComponent* _InventoryComponent;
 
 	/*
 	UPROPERTY(EditAnywhere, Category = "Projectile")
