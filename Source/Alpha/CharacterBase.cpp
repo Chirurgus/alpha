@@ -13,6 +13,8 @@ ACharacterBase::ACharacterBase()
 		{CreateDefaultSubobject<UCameraComponent>("Camera component")}*/
 	, _ActiveInventoryComponent
 		{CreateDefaultSubobject<UActiveInventoryComponent>("Active inventory component")}
+	, _InventoryComponent
+		{CreateDefaultSubobject<UInventoryComponent>("Inventory component")}
 { 	
 	// Set this character to call Tick() every frame. 
 	//You can turn this off to improve performance if you don't need it.
@@ -148,6 +150,11 @@ void ACharacterBase::SprintReleased()
 	_is_sprinting = false;
 }
 
+UInventoryComponent * ACharacterBase::GetInventoryComponent()
+{
+	return _InventoryComponent;
+}
+
 float ACharacterBase::GetHealth() const
 {
 	return _Health;
@@ -199,6 +206,11 @@ void ACharacterBase::OnBeginOverlapItem(UPrimitiveComponent* comp,
 	if (!item) {
 		return;	
 	}
-	_ActiveInventoryComponent->EquipWeapon(item);
+	if (_InventoryComponent->Add(item)) {
+		PRINT_DEBUG_MESSAGE("true");
+	}
+	else {
+		PRINT_DEBUG_MESSAGE("FALSE");
+	}
 }
 

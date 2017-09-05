@@ -25,4 +25,17 @@ public:
 	bool CanInteract() override;
 
 	FString GetInteractableName() override;
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	uint8 GetXSize();
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	uint8 GetYSize();
+
+private:
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	uint8 _xsize;
+
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	uint8 _ysize;
 };

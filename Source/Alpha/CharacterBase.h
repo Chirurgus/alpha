@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "ProjectileBase.h"
 #include "ActiveInventoryComponent.h"
+#include "InventoryComponent.h"
 #include "CharacterBase.generated.h"
 
 UCLASS(Blueprintable)
@@ -48,6 +49,8 @@ public:
 	UFUNCTION()
 	virtual void SprintReleased();
 	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UInventoryComponent* GetInventoryComponent();
 	
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	float GetHealth() const;
@@ -74,29 +77,16 @@ public:
 							const FHitResult& sweep_result);
 
 protected:
-	/*
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
-	UCameraComponent* _CameraComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
-	USpringArmComponent* _CameraBoonComponent;
-	*/
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	UActiveInventoryComponent* _ActiveInventoryComponent;
 
-	/*
-	UPROPERTY(EditAnywhere, Category = "Projectile")
-	TSubclassOf<AProjectileBase> _ProjectileClass;
-	
-	UPROPERTY(EditAnywhere, Category = "Gameplay")
-	FVector _MuzzleOffset;
-	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+	UInventoryComponent* _InventoryComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float _Health;
 
 
  private:
-	bool _is_sprinting{false};
+	bool _is_sprinting {false};
 };
