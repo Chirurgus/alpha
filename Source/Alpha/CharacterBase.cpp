@@ -150,6 +150,11 @@ void ACharacterBase::SprintReleased()
 	_is_sprinting = false;
 }
 
+UInventoryComponent * ACharacterBase::GetInventoryComponent()
+{
+	return _InventoryComponent;
+}
+
 float ACharacterBase::GetHealth() const
 {
 	return _Health;
