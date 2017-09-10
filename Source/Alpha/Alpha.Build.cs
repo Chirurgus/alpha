@@ -12,9 +12,4 @@ public class Alpha : ModuleRules
     {
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "Slate", "SlateCore" });
     }
-    /*
-	//public Alpha(TargetInfo Target) :
-	{
-	}
- */
 }

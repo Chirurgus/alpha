@@ -14,19 +14,4 @@ public class AlphaTarget : TargetRules
         Type = TargetType.Game;
         ExtraModuleNames.AddRange(new string[] { "Alpha" });
 	}
-
-	//
-	// TargetRules interface.
-	//
-
-    /*
-	public override void SetupBinaries(
-		TargetInfo Target,
-		ref List<UEBuildBinaryConfiguration> OutBuildBinaryConfigurations,
-		ref List<string> OutExtraModuleNames
-		)
-	{
-		OutExtraModuleNames.Add("Alpha");
-	}
-    */
 }
