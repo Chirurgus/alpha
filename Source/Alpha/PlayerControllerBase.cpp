@@ -89,7 +89,16 @@ void APlayerControllerBase::Possess(APawn * pawn)
 			return;
 		}
 	}
-	_CameraActor->AttachRootComponentToActor(pawn);
+	_CameraActor->AttachToActor(
+		pawn,
+		FAttachmentTransformRules {
+			EAttachmentRule::KeepRelative,
+			EAttachmentRule::KeepRelative,
+			EAttachmentRule::KeepRelative,
+			true
+		}
+	);
+
 	_CameraActor->SetActorRelativeLocation(FVector {0, 0, 80});
 	//PlayerCameraManager->SetViewTarget(_CameraActor, FViewTargetTransitionParams {});
 	PlayerCameraManager->ViewTarget.Target = _CameraActor;

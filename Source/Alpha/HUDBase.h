@@ -11,7 +11,7 @@
  */
 
 UENUM(BlueprintType)
-enum class EUiCategory {
+enum class EUiCategory : uint8 {
 	HUD,
 	PauseMenu,
 	EscMenu

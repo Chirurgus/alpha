@@ -25,12 +25,12 @@ FString AItem::GetInteractableName()
 	return FString {"An Item"};
 }
 
-inline uint8 AItem::GetXSize()
+uint8 AItem::GetXSize()
 {
 	return _xsize;
 }
 
-inline uint8 AItem::GetYSize()
+uint8 AItem::GetYSize()
 {
 	return _ysize;
 }
