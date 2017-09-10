@@ -9,7 +9,7 @@ AThirdPersonCameraActor::AThirdPersonCameraActor()
 {
 	RootComponent = _SpringArmComponent;
 	GetCameraComponent()->SetupAttachment(_SpringArmComponent);
-	_SpringArmComponent->TargetArmLength = 300;
+	_SpringArmComponent->TargetArmLength = 200;
 }
 
 
