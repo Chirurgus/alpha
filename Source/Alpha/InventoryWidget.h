@@ -3,6 +3,8 @@
 #pragma once
 
 #include "WidgetBase.h"
+#include "InventoryComponent.h"
+#include "CharacterBase.h"
 #include "InventoryWidget.generated.h"
 
 /**
@@ -13,7 +15,21 @@ class ALPHA_API UInventoryWidget : public UWidgetBase
 {
 	GENERATED_BODY()
 	
+public:
+	UInventoryWidget(const FObjectInitializer& obj_init);
 	
 	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	uint8 GetXSize() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	uint8 GetYSize() const;
 	
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UInventoryComponent* GetInventoryComponent();
+	
+private:
+	UPROPERTY()
+	UInventoryComponent* _inventory;
 };

@@ -24,6 +24,7 @@ void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	/*
 		PRINT_DEBUG_MESSAGE("=============================");
 	for (uint8 i {_gridheight}; i-- > 0;) {
 		FString s {};
@@ -32,11 +33,23 @@ void UInventoryComponent::BeginPlay()
 		}
 		PRINT_DEBUG_MESSAGE(s);
 	}
+	*/
 
 
 	// ...
 	
 }
+
+uint8 UInventoryComponent::GetXSize() const
+{
+	return _gridwidth;
+}
+
+uint8 UInventoryComponent::GetYSize() const
+{
+	return _gridheight;
+}
+
 
 bool UInventoryComponent::Add(AItem * item)
 {
@@ -55,6 +68,7 @@ bool UInventoryComponent::Add(AItem * item)
 		}
 	}
 
+	/*
 	PRINT_DEBUG_MESSAGE("=============================");
 	for (uint8 i {0}; i < _gridheight; ++i) {
 		FString s {};
@@ -63,6 +77,7 @@ bool UInventoryComponent::Add(AItem * item)
 		}
 		PRINT_DEBUG_MESSAGE(s);
 	}
+	*/
 
 	return true;
 }
