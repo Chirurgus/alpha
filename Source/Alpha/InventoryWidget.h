@@ -18,7 +18,8 @@ class ALPHA_API UInventoryWidget : public UWidgetBase
 public:
 	UInventoryWidget(const FObjectInitializer& obj_init);
 	
-	
+	bool Initialize() override;
+
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	uint8 GetXSize() const;
 

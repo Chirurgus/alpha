@@ -227,10 +227,10 @@ void APlayerControllerBase::OpenPauseMenu()
 	//SetPause(true);
 	AHUDBase* hud {Cast<AHUDBase>(GetHUD())};
 	if (hud) {
-		if (!hud->IsWidgetInCategory(EUiCategory::PauseMenu, FName {"PauseMenu"})) {
+		if (!hud->IsWidgetInCategory(EUiCategory::PauseMenu, FName {"InventoryMenu"})) {
 			hud->AddToCategory(
 				EUiCategory::PauseMenu,
-				FName {"PauseMenu"}
+				FName {"InventoryMenu"}
 			);
 		}
 		hud->HideUi(EUiCategory::HUD);
