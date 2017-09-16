@@ -20,7 +20,7 @@ public:
 
 	UInventoryGridPanel(const FObjectInitializer& obj_init);
 
-	void OnCreationFromPalette() override;
+	void PostLoad() override;
 
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
 	void Resize();

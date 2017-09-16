@@ -11,8 +11,9 @@ UInventoryGridPanel::UInventoryGridPanel(const FObjectInitializer& obj_init)
 {
 }
 
-void UInventoryGridPanel::OnCreationFromPalette()
+void UInventoryGridPanel::PostLoad()
 {
+	Super::PostLoad();
 	Resize();
 	PRINT_DEBUG_MESSAGE("hi");
 }
