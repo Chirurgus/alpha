@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Alpha.h"
-#include "InventoryGridPanel.h"
+#include "UniformGridSlot.h"
 #include "InventoryWidget.h"
 
 UInventoryWidget::UInventoryWidget(const FObjectInitializer& obj_init)
@@ -12,29 +12,46 @@ UInventoryWidget::UInventoryWidget(const FObjectInitializer& obj_init)
 
 bool UInventoryWidget::Initialize()
 {
-	bool ret {Super::Initialize()};
-	ACharacterBase* pc {Cast<ACharacterBase>(GetOwningPlayerPawn())};
-	if (pc) {
-		_inventory = pc->GetInventoryComponent();
-	}
-	else {
-		UE_LOG(ALogCritical, Error, TEXT("InventoryWidget is not owned by ACharacterBase"));
-	}
-	return ret;
+	return Super::Initialize() && init_inventory();
 }
 
-uint8 UInventoryWidget::GetXSize() const
+void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
+										 const TSubclassOf<UWidgetBase> slot_t) const
 {
-	return _inventory ? _inventory->GetXSize() : 0;
+	for (uint8 i {0}; i < _inventory->GetYSize(); ++i) {
+		for (uint8 j {0}; j < _inventory->GetXSize(); ++j) {
+			UUniformGridSlot* const slot {
+				grid->AddChildToUniformGrid(
+					CreateWidget<UWidgetBase>(GetOwningPlayer(), slot_t)
+				)
+			};
+			if (!slot) {
+				UE_LOG(ALog, Error, TEXT("AddChildToUniformGrid returned nullptr"));
+				return;
+			}
+			slot->SetColumn(j);
+			slot->SetRow(i);
+		}
+	}
 }
 
-uint8 UInventoryWidget::GetYSize() const
-{
-	return _inventory ? _inventory->GetYSize() : 0;
-}
-
+/*
 UInventoryComponent * UInventoryWidget::GetInventoryComponent()
 {
 	return _inventory;
+}
+*/
+
+bool UInventoryWidget::init_inventory()
+{
+	ACharacterBase* pc {Cast<ACharacterBase>(GetOwningPlayerPawn())};
+	if (pc) {
+		_inventory = pc->GetInventoryComponent();
+		return true;
+	}
+	else {
+		UE_LOG(ALogCritical, Error, TEXT("Could not initialize InventoryWidget"));
+		return false;
+	}
 }
 

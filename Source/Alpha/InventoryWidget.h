@@ -3,8 +3,8 @@
 #pragma once
 
 #include "WidgetBase.h"
-#include "InventoryComponent.h"
 #include "CharacterBase.h"
+#include "UniformGridPanel.h"
 #include "InventoryWidget.generated.h"
 
 /**
@@ -20,17 +20,20 @@ public:
 	
 	bool Initialize() override;
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	uint8 GetXSize() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	uint8 GetYSize() const;
-	
 protected:
+	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
+	void PopulateGridPanel(UUniformGridPanel* const grid,
+						   const TSubclassOf<UWidgetBase> slot_t) const;
+	
+/*	// Why would anybody need to get an InventoryCompnent?
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	UInventoryComponent* GetInventoryComponent();
+	*/
 	
 private:
+	bool init_inventory();
+
 	UPROPERTY()
 	UInventoryComponent* _inventory;
 };
