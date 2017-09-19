@@ -29,6 +29,8 @@ void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
 				UE_LOG(ALog, Error, TEXT("AddChildToUniformGrid returned nullptr"));
 				return;
 			}
+			slot->SetHorizontalAlignment(EHorizontalAlignment::HAlign_Fill);
+			slot->SetVerticalAlignment(EVerticalAlignment::VAlign_Fill);
 			slot->SetColumn(j);
 			slot->SetRow(i);
 		}
