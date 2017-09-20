@@ -37,13 +37,6 @@ void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
 	}
 }
 
-/*
-UInventoryComponent * UInventoryWidget::GetInventoryComponent()
-{
-	return _inventory;
-}
-*/
-
 bool UInventoryWidget::init_inventory()
 {
 	ACharacterBase* pc {Cast<ACharacterBase>(GetOwningPlayerPawn())};
