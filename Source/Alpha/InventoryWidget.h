@@ -3,6 +3,7 @@
 #pragma once
 
 #include "WidgetBase.h"
+#include "InventorySlotWidget.h"
 #include "CharacterBase.h"
 #include "UniformGridPanel.h"
 #include "InventoryWidget.generated.h"
@@ -22,16 +23,23 @@ public:
 
 
 protected:
+	/* Clears the grid, and adds needed number of slot_t's
+	   and positions them in the needed row/column.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
+	void ResizeGridPanel(UUniformGridPanel* const grid,
+						   const TSubclassOf<UWidgetBase> slot_t) const;
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
 	void PopulateGridPanel(UUniformGridPanel* const grid,
 						   const TSubclassOf<UWidgetBase> slot_t) const;
-	
-/*	// Why would anybody need to get an InventoryCompnent?
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	UInventoryComponent* GetInventoryComponent();
-	*/
+
+	UTexture2D* DefaultIcon;
 	
 private:
+	UInventorySlotWidget* get_slot(const uint8 x,
+					  const uint8 y,
+					  UUniformGridPanel* const grid) const;
+
 	bool init_inventory();
 
 	UPROPERTY()

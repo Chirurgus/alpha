@@ -43,9 +43,6 @@ public:
 protected:
 	
 private:
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-		TArray<AItem*> GetGrid() { return _grid; }
-	
 
 	/* checks if item can fit in inventory, and gives x,y coordinates,
 		x,y are untouched if CanFIt returns false */
@@ -55,8 +52,19 @@ private:
 
 
 	/* Mini matrix class */
-	AItem* get_item(const uint8 x, const uint8 y);
-	void set_item(const uint8 x, const uint8 y, AItem* item_ptr);
+	/* in-class defined to allow inline function to be called
+		from another translation unit
+	*/
+	/* To have a single place where the coefs are calculated */
+	uint8 get_item_pos(const uint8 y, const uint8 x) {
+		return _gridwidth * y + x;
+	}
+	AItem* get_item(const uint8 y, const uint8 x) {
+		return _grid[get_item_pos(y, x)];
+	}
+	void set_item(const uint8 y, const uint8 x, AItem* item_ptr) {
+		_grid[get_item_pos(y, x)] = item_ptr;
+	}
 
 	uint8 _gridheight;
 	uint8 _gridwidth;	

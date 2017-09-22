@@ -33,7 +33,7 @@ public:
 	uint8 GetYSize();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	UTexture2D* GetIcon() const;
+	UTexture2D* const GetIcon() const;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Inventory")

@@ -7,7 +7,12 @@
 UInventoryWidget::UInventoryWidget(const FObjectInitializer& obj_init)
 	: Super {obj_init}
 	, _inventory {nullptr}
+	, DefaultIcon {nullptr}
 {
+	static ConstructorHelpers::FObjectFinder<UTexture2D> Default_iconObj(
+		TEXT("Texture2D'/Game/Item_icons/default_icon.default_icon'")
+	);
+	DefaultIcon = Default_iconObj.Object;
 }
 
 bool UInventoryWidget::Initialize()
@@ -15,7 +20,7 @@ bool UInventoryWidget::Initialize()
 	return Super::Initialize() && init_inventory();
 }
 
-void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
+void UInventoryWidget::ResizeGridPanel(UUniformGridPanel * const grid,
 										 const TSubclassOf<UWidgetBase> slot_t) const
 {
 	for (uint8 i {0}; i < _inventory->GetYSize(); ++i) {
@@ -36,6 +41,40 @@ void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
 		}
 	}
 }
+void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
+										 const TSubclassOf<UWidgetBase> slot_t) const
+{
+	/* if grid is not of appropriate size */
+	/*
+	if (_inventory->_grid.Num() != grid->GetChildrenCount() ||
+		Cast<UUniformGridSlot>(grid->GetChildAt(grid->GetChildrenCount() - 1))->Row
+		!= _inventory->GetYSize() - 1 ||
+		Cast<UUniformGridSlot>(grid->GetChildAt(grid->GetChildrenCount() - 1))->Column
+		!= _inventory->GetXSize() - 1)
+		*/
+	{
+		ResizeGridPanel(grid, slot_t);
+	}
+	for (uint8 i {0}; i < _inventory->GetYSize(); ++i) {
+		for (uint8 j {0}; j < _inventory->GetXSize(); ++j) {
+			UTexture2D* icon {nullptr};
+			if (AItem* const item {_inventory->get_item(i,j)}) {
+				icon = item->GetIcon();
+			}
+			else {
+				icon = DefaultIcon;
+			}
+			get_slot(i,j,grid)->SetIcon(icon);;
+		}
+	}
+}
+inline UInventorySlotWidget* UInventoryWidget::get_slot(const uint8 y,
+								    const uint8 x,
+								    UUniformGridPanel* const grid) const
+{
+	return Cast<UInventorySlotWidget>(grid->GetChildAt(_inventory->get_item_pos(y, x)));
+}
+
 
 bool UInventoryWidget::init_inventory()
 {

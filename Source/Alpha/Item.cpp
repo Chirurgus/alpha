@@ -36,7 +36,7 @@ uint8 AItem::GetYSize()
 	return _ysize;
 }
 
-UTexture2D * AItem::GetIcon() const
+UTexture2D * const AItem::GetIcon() const
 {
 	return _icon;
 }

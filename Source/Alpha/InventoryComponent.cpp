@@ -161,13 +161,3 @@ bool UInventoryComponent::Contains(AItem * item,uint8 & x,uint8 & y)
 	}
 	return false;
 }
-
-inline AItem * UInventoryComponent::get_item(const uint8 i,const uint8 j)
-{
-	return _grid[_gridwidth * i + j];
-}
-
-void UInventoryComponent::set_item(const uint8 i,const uint8 j,AItem * item_ptr)
-{
-	_grid[_gridwidth * i + j] = item_ptr;
-}

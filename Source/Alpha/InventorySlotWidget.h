@@ -17,4 +17,14 @@ class ALPHA_API UInventorySlotWidget : public UWidgetBase
 public:
 	UInventorySlotWidget(const FObjectInitializer& obj_init);
 	
+	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
+	void SetIcon(UTexture2D* const icon);
+
+protected:
+	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
+	UTexture2D* const GetIcon() const;
+
+private:
+	UPROPERTY()
+	UTexture2D* _icon;
 };
