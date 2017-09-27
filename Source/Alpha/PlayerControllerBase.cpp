@@ -40,8 +40,8 @@ void APlayerControllerBase::SetupInputComponent()
 		InputComponent->BindAction("Crouch",IE_Released, this, &APlayerControllerBase::CrouchReleased);
 		InputComponent->BindAction("Sprint",IE_Pressed, this, &APlayerControllerBase::SprintPressed);
 		InputComponent->BindAction("Sprint",IE_Released, this, &APlayerControllerBase::SprintReleased);
-		InputComponent->BindAction("PauseMenu",IE_Pressed, this, &APlayerControllerBase::OpenPauseMenu);
-		InputComponent->BindAction("PauseMenu",IE_Released, this, &APlayerControllerBase::ClosePauseMenu);
+		InputComponent->BindAction("PauseMenu",IE_Pressed, this, &APlayerControllerBase::PauseMenuButtonPressed);
+		//InputComponent->BindAction("PauseMenu",IE_Released, this, &APlayerControllerBase::ClosePauseMenu);
 
 	}
 	else {
@@ -222,9 +222,20 @@ void APlayerControllerBase::SprintReleased()
 	}
 }
 
+void APlayerControllerBase::PauseMenuButtonPressed() {
+	static bool pause_shown {false};
+	if (!pause_shown) {
+		OpenPauseMenu();
+		pause_shown = true;
+	}
+	else {
+		ClosePauseMenu();
+		pause_shown = false;
+	}
+}
+
 void APlayerControllerBase::OpenPauseMenu()
 {
-	//SetPause(true);
 	AHUDBase* hud {Cast<AHUDBase>(GetHUD())};
 	if (hud) {
 		if (!hud->IsWidgetInCategory(EUiCategory::PauseMenu, FName {"InventoryMenu"})) {

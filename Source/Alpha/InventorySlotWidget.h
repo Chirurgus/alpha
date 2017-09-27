@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "WidgetBase.h"
+#include "Item.h"
 #include "InventorySlotWidget.generated.h"
 
 /**
@@ -18,13 +19,17 @@ public:
 	UInventorySlotWidget(const FObjectInitializer& obj_init);
 	
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
-	void SetIcon(UTexture2D* const icon);
+	void SetItem(const AItem* const item);
 
 protected:
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
-	UTexture2D* const GetIcon() const;
+	UTexture2D* GetIcon() const;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InventoryUI")
+	UTexture2D* DefaultIcon;
 
 private:
 	UPROPERTY()
-	UTexture2D* _icon;
+	const AItem* _item;
+	
 };

@@ -7,8 +7,8 @@
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
 	: _grid {}
-	, _gridheight {2}
-	, _gridwidth {3}
+	, _gridheight {4}
+	, _gridwidth {4}
 {
 	//This component will be manually updated and paged
 	PrimaryComponentTick.bCanEverTick = false;

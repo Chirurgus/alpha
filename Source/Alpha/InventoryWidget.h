@@ -33,7 +33,6 @@ protected:
 	void PopulateGridPanel(UUniformGridPanel* const grid,
 						   const TSubclassOf<UWidgetBase> slot_t) const;
 
-	UTexture2D* DefaultIcon;
 	
 private:
 	UInventorySlotWidget* get_slot(const uint8 x,

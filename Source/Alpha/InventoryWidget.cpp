@@ -7,12 +7,7 @@
 UInventoryWidget::UInventoryWidget(const FObjectInitializer& obj_init)
 	: Super {obj_init}
 	, _inventory {nullptr}
-	, DefaultIcon {nullptr}
 {
-	static ConstructorHelpers::FObjectFinder<UTexture2D> Default_iconObj(
-		TEXT("Texture2D'/Game/Item_icons/default_icon.default_icon'")
-	);
-	DefaultIcon = Default_iconObj.Object;
 }
 
 bool UInventoryWidget::Initialize()
@@ -53,21 +48,17 @@ void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
 		!= _inventory->GetXSize() - 1)
 		*/
 	{
+		grid->ClearChildren();
 		ResizeGridPanel(grid, slot_t);
+		PRINT_DEBUG_MESSAGE("CALLLLLLLLLLLLED");
 	}
 	for (uint8 i {0}; i < _inventory->GetYSize(); ++i) {
 		for (uint8 j {0}; j < _inventory->GetXSize(); ++j) {
-			UTexture2D* icon {nullptr};
-			if (AItem* const item {_inventory->get_item(i,j)}) {
-				icon = item->GetIcon();
-			}
-			else {
-				icon = DefaultIcon;
-			}
-			get_slot(i,j,grid)->SetIcon(icon);;
+			get_slot(i,j,grid)->SetItem(_inventory->get_item(i,j));;
 		}
 	}
 }
+
 inline UInventorySlotWidget* UInventoryWidget::get_slot(const uint8 y,
 								    const uint8 x,
 								    UUniformGridPanel* const grid) const

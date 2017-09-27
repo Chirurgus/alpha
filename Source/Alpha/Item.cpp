@@ -5,8 +5,8 @@
 
 
 AItem::AItem()
-	: _xsize {1}
-	, _ysize {1}
+	: _xsize {2}
+	, _ysize {2}
 	, _icon {nullptr}
 {
 }
@@ -36,7 +36,7 @@ uint8 AItem::GetYSize()
 	return _ysize;
 }
 
-UTexture2D * const AItem::GetIcon() const
+UTexture2D * AItem::GetIcon() const
 {
 	return _icon;
 }
