@@ -224,6 +224,10 @@ void APlayerControllerBase::SprintReleased()
 
 void APlayerControllerBase::PauseMenuButtonPressed() {
 	static bool pause_shown {false};
+	//SetPause(!pause_shown);
+	SetIgnoreLookInput(!pause_shown);
+	SetIgnoreMoveInput(!pause_shown);
+	bShowMouseCursor = !pause_shown;
 	if (!pause_shown) {
 		OpenPauseMenu();
 		pause_shown = true;

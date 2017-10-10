@@ -14,9 +14,14 @@ UInventorySlotWidget::UInventorySlotWidget(const FObjectInitializer& obj_init)
 	DefaultIcon = Default_iconObj.Object;
 }
 
-void UInventorySlotWidget::SetItem(const AItem* const item)
+void UInventorySlotWidget::SetItem(AItem* const item)
 {
 	_item = item;
+}
+
+AItem * UInventorySlotWidget::GetItem()
+{
+	return _item;
 }
 
 UTexture2D * UInventorySlotWidget::GetIcon() const

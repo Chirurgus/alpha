@@ -19,7 +19,10 @@ public:
 	UInventorySlotWidget(const FObjectInitializer& obj_init);
 	
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
-	void SetItem(const AItem* const item);
+	void SetItem(AItem* const item);
+
+	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
+	AItem* GetItem();
 
 protected:
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
@@ -30,6 +33,6 @@ protected:
 
 private:
 	UPROPERTY()
-	const AItem* _item;
+	AItem* _item;
 	
 };
