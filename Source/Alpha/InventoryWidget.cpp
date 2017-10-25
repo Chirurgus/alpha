@@ -2,12 +2,15 @@
 
 #include "Alpha.h"
 #include "UniformGridSlot.h"
+#include "InventoryDragDropOperation.h"
 #include "InventoryWidget.h"
 
 UInventoryWidget::UInventoryWidget(const FObjectInitializer& obj_init)
 	: Super {obj_init}
 	, _inventory {nullptr}
 {
+	//Tick is o nly called manually
+	bCanEverPaint = false;
 }
 
 bool UInventoryWidget::Initialize()
@@ -15,8 +18,13 @@ bool UInventoryWidget::Initialize()
 	return Super::Initialize() && init_inventory();
 }
 
+bool UInventoryWidget::MoveItem(AItem* item, uint8 row, uint8 column)
+{
+	return _inventory->MoveItem(item, row, column);
+}
+
 void UInventoryWidget::ResizeGridPanel(UUniformGridPanel * const grid,
-										 const TSubclassOf<UWidgetBase> slot_t) const
+										 const TSubclassOf<UInventorySlotWidget> slot_t)
 {
 	for (uint8 i {0}; i < _inventory->GetYSize(); ++i) {
 		for (uint8 j {0}; j < _inventory->GetXSize(); ++j) {
@@ -33,11 +41,13 @@ void UInventoryWidget::ResizeGridPanel(UUniformGridPanel * const grid,
 			slot->SetVerticalAlignment(EVerticalAlignment::VAlign_Fill);
 			slot->SetColumn(j);
 			slot->SetRow(i);
+			Cast<UInventorySlotWidget>(slot->Content)->SetParent(this);
+			
 		}
 	}
 }
 void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
-										 const TSubclassOf<UWidgetBase> slot_t) const
+										 const TSubclassOf<UInventorySlotWidget> slot_t)
 {
 	/* if grid is not of appropriate size */
 	/*
@@ -50,11 +60,14 @@ void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
 	{
 		grid->ClearChildren();
 		ResizeGridPanel(grid, slot_t);
-		PRINT_DEBUG_MESSAGE("CALLLLLLLLLLLLED");
 	}
 	for (uint8 i {0}; i < _inventory->GetYSize(); ++i) {
 		for (uint8 j {0}; j < _inventory->GetXSize(); ++j) {
-			get_slot(i,j,grid)->SetItem(_inventory->get_item(i,j));;
+			UInventorySlotWidget* grid_slot {get_slot(i,j,grid)};
+			grid_slot->SetItem(_inventory->get_item(i,j));;
+			/*
+			grid_slot->SetPosition(i,j);
+			*/
 		}
 	}
 }
@@ -63,6 +76,7 @@ inline UInventorySlotWidget* UInventoryWidget::get_slot(const uint8 y,
 								    const uint8 x,
 								    UUniformGridPanel* const grid) const
 {
+
 	return Cast<UInventorySlotWidget>(grid->GetChildAt(_inventory->get_item_pos(y, x)));
 }
 

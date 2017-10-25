@@ -21,6 +21,9 @@ public:
 	
 	bool Initialize() override;
 
+	/* Called from OnDrop even in blueprint */
+	UFUNCTION(BlueprintCallable, Category="Drag and Drop")
+	bool MoveItem(AItem* item, uint8 column, uint8 row); 
 
 protected:
 	/* Clears the grid, and adds needed number of slot_t's
@@ -28,10 +31,10 @@ protected:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
 	void ResizeGridPanel(UUniformGridPanel* const grid,
-						   const TSubclassOf<UWidgetBase> slot_t) const;
+						   const TSubclassOf<UInventorySlotWidget> slot_t);
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
 	void PopulateGridPanel(UUniformGridPanel* const grid,
-						   const TSubclassOf<UWidgetBase> slot_t) const;
+						   const TSubclassOf<UInventorySlotWidget> slot_t);
 
 	
 private:

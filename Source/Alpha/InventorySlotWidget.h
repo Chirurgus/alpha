@@ -18,11 +18,22 @@ class ALPHA_API UInventorySlotWidget : public UWidgetBase
 public:
 	UInventorySlotWidget(const FObjectInitializer& obj_init);
 	
+	void SetParent(class UInventoryWidget* w);
+
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
 	void SetItem(AItem* const item);
 
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
 	AItem* GetItem();
+
+
+	/* Called from OnDrop even in blueprint */
+	UFUNCTION(BlueprintCallable, Category="Drag and Drop")
+	bool HandleOnDrop(
+		FGeometry MyGeometry,
+		FPointerEvent PointerEvent,
+		UDragDropOperation* Operation
+	); 
 
 protected:
 	UFUNCTION(BlueprintCallable, Category = "InventoryUI")
@@ -32,6 +43,9 @@ protected:
 	UTexture2D* DefaultIcon;
 
 private:
+	UPROPERTY()
+	class UInventoryWidget* _parent;
+
 	UPROPERTY()
 	AItem* _item;
 	

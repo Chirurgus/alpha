@@ -40,9 +40,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	virtual bool Contains(AItem* item);
 
+	UFUNCTION()
+	bool MoveItem(AItem* item, const uint8 j, const uint8 i);
+
+	/* Checks if item can be moved to i,j, even by swaping if necesseary */
+	UFUNCTION()
+	bool CanMove(AItem* item, const uint8 j, const uint8 i);
+
 protected:
 	
 private:
+
+	/* Higher level set_item function */
+	void SetItem(AItem* item, uint8 row, uint8 column);	
 
 	/* checks if item can fit in inventory, and gives x,y coordinates,
 		x,y are untouched if CanFIt returns false */
