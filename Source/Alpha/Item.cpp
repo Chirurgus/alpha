@@ -5,8 +5,9 @@
 
 
 AItem::AItem()
-	: _xsize {1}
-	, _ysize {1}
+	: _xsize {2}
+	, _ysize {2}
+	, _icon {nullptr}
 {
 }
 
@@ -25,12 +26,17 @@ FString AItem::GetInteractableName()
 	return FString {"An Item"};
 }
 
-inline uint8 AItem::GetXSize()
+uint8 AItem::GetXSize()
 {
 	return _xsize;
 }
 
-inline uint8 AItem::GetYSize()
+uint8 AItem::GetYSize()
 {
 	return _ysize;
+}
+
+UTexture2D * AItem::GetIcon() const
+{
+	return _icon;
 }

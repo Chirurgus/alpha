@@ -32,10 +32,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	uint8 GetYSize();
 
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UTexture2D* GetIcon() const;
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Inventory")
 	uint8 _xsize;
 
 	UPROPERTY(EditAnywhere, Category = "Inventory")
 	uint8 _ysize;
+	
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	UTexture2D* _icon;
 };

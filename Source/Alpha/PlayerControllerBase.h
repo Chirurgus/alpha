@@ -37,14 +37,15 @@ class ALPHA_API APlayerControllerBase : public APlayerController
 	void CrouchReleased();
 	void SprintPressed();
 	void SprintReleased();
-
-	void OpenPauseMenu();
-	void ClosePauseMenu();
+	void PauseMenuButtonPressed();
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	AThirdPersonCameraActor* _CameraActor;
 
 private:
+	void OpenPauseMenu();
+	void ClosePauseMenu();
+
 	using pawn_type = ACharacterBase;
 };
