@@ -6,8 +6,8 @@
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
 	: _grid {}
-	, _gridheight {2}
-	, _gridwidth {2}
+	, _gridheight {3}
+	, _gridwidth {3}
 {
 	//This component will be manually updated and paged
 	PrimaryComponentTick.bCanEverTick = false;
@@ -90,19 +90,19 @@ void UInventoryComponent::Remove(AItem * item)
 	}
 	for (uint8 i {0}; i < item->GetYSize(); ++i) {
 		for (uint8 j {0}; j < item->GetXSize(); ++j) {
-			set_item(y + i,x + j,nullptr);
+			set_item(y + i, x + j, nullptr); 
 		}
 	}
 	
 }
 
-bool UInventoryComponent::CanFit(AItem * item)
+bool UInventoryComponent::CanFit(AItem * item) const
 {	
 	uint8 x,y;
 	return CanFit(item, x, y);
 }
 
-bool UInventoryComponent::Contains(AItem * item)
+bool UInventoryComponent::Contains(AItem * item) const
 {
 	if (!item) {
 		return false;
@@ -117,72 +117,38 @@ bool UInventoryComponent::Contains(AItem * item)
 	return false;
 }
 
-bool UInventoryComponent::MoveItem(AItem * item, const uint8 j_target, const uint8 i_target)
+bool UInventoryComponent::MoveItem(AItem * item, const uint8 target_col, const uint8 target_row)
 {
-	if (CanMove(item,j_target,i_target)) {
+	/* Don't allow swapping. */
+	if (CanMove(item,target_col,target_row)) {
 		Remove(item);
-		if (AItem* target_item {get_item(j_target,i_target)}) {
-			uint8 item_j, item_i;
-			Contains(item, item_i, item_j);
-			uint8 target_item_j, target_item_i;
-			Contains(target_item,target_item_j,target_item_i);
+		/*
+		if (AItem* target_item {get_item(target_row, target_col)}) {
+			uint8 item_col, item_row;
+			if (!Contains(item, item_row, item_col)) {
+				UE_LOG(ALog, Error, TEXT("FUCK FUCK FUCK FUKC FUKC"));
+			}
 			Remove(target_item);
-			SetItem(item, j_target, i_target);
-			SetItem(target_item, item_j, item_i);
+			SetItem(target_item, item_row, item_col);
+			UE_LOG(ALog, Log, TEXT("item_row = %i item_col = %i"), item_row, item_col);
 		}
-		else {
-			set_item(j_target,i_target,item);
-		}
+		*/
+		SetItem(item, target_row, target_col);
+		UE_LOG(ALog, Log, TEXT("target_row = %i target_col = %i"), target_row, target_col);
 		return true;
 	}
 	return false;
 }
 
-bool UInventoryComponent::CanMove(AItem * item, const uint8 j_target, const uint8 i_target)
+bool UInventoryComponent::CanMove(AItem * item, const uint8 target_col, const uint8 target_row) const
 {
-	/* TODO: check if swaping is possible
-
-	*/
-	/*
-	{
-		FString a {"j_target = "}; 
-		a += (j_target == 1 ? "1" : "0");
-		FString b {"i_target = "};
-		b += (j_target == 1 ? "1" : "0");
-		PRINT_DEBUG_MESSAGE(a);
-		PRINT_DEBUG_MESSAGE(b);
-	}
-	PRINT_DEBUG_MESSAGE("=============================");
-	for (uint8 i {_gridheight}; i-- > 0;) {
-		FString s {};
-		for (uint8 j {0}; j < _gridwidth; ++j) {
-			s += (get_item(i,j) ? "1 " : "0 ");
-		}
-		PRINT_DEBUG_MESSAGE(s);
-	}
-	*/
-
-	uint8 item_i_pos {}, item_j_pos {};
-
-	if (!item) PRINT_DEBUG_MESSAGE("PTR Null");
-	if (j_target >= _gridwidth) PRINT_DEBUG_MESSAGE("j too big");
-	if (i_target >= _gridheight) PRINT_DEBUG_MESSAGE("I too big");
-	if (!Contains(item, item_j_pos, item_i_pos)) PRINT_DEBUG_MESSAGE("dose not contain item");
+	uint8 item_row {}, item_col {};
 
 	if (!item ||
-		j_target >= _gridwidth ||
-		i_target >= _gridheight ||
-		!Contains(item, item_j_pos, item_i_pos))
+		target_col >= _gridwidth ||
+		target_row >= _gridheight ||
+		!Contains(item, item_col, item_row))
 	{
-		PRINT_DEBUG_MESSAGE("HI");
-		PRINT_DEBUG_MESSAGE("=============================");
-		for (uint8 i {_gridheight}; i-- > 0;) {
-			FString s {};
-			for (uint8 j {0}; j < _gridwidth; ++j) {
-				s += (get_item(i,j) ? "1 " : "0 ");
-			}
-			PRINT_DEBUG_MESSAGE(s);
-		}
 		return false;
 	}
 	TArray<AItem*> tmp_array(_grid);
@@ -191,23 +157,53 @@ bool UInventoryComponent::CanMove(AItem * item, const uint8 j_target, const uint
 			p = nullptr;
 		}
 	}
-	if (AItem* target_item {tmp_array[get_item_pos(j_target,i_target)]}) {
+	
+	/* prevent swapping , just return false */
+
+	/* if there is an item in the target slot => try to swap
+		- unequip the item
+		- see if it can fit in item's original place
+		*/
+//	if (AItem* target_item {tmp_array[get_item_pos(target_row,target_col)]}) {
+
+		/* unequip the item */
+		/*
 		for (auto& p : tmp_array) {
 			if (p == target_item) {
 				p = nullptr;
 			}
 		}
+		*/
+		/* check if item overlaps any other items */
+		/*
 		for (uint8 i {0}; i < item->GetYSize(); ++i) {
 			for (uint8 j {0}; j < item->GetXSize(); ++j) {
-				if (!(i >= _gridwidth || j >= _gridheight) || tmp_array[get_item_pos(j_target+j,i_target+i)]) {
+				if ((i + target_row) >= _gridheight || (j + target_col) >= _gridwidth || tmp_array[get_item_pos(target_row+i,target_col+j)]) {
+					PRINT_DEBUG_MESSAGE("item overlaps many items");
 					return false;
 				}
 			}
 		}
-	}
+		*/
+
+		/* see if target_item fits into item's original slot */
+		/*
+		for (uint8 i {0}; i < target_item->GetYSize(); ++i) {
+			for (uint8 j {0}; j < target_item->GetXSize(); ++j) {
+				if ((i + target_row) >= _gridheight || (j + target_col) >= _gridwidth || tmp_array[get_item_pos(target_row+i,target_col+j)]) {
+					PRINT_DEBUG_MESSAGE("Target_item doesn't fit into item's slot");
+					return false;
+				}
+			}
+		}
+		*/
+//	}
+
+	/* Check if item fits in target */
 	for (uint8 i {0}; i < item->GetYSize(); ++i) {
 		for (uint8 j {0}; j < item->GetXSize(); ++j) {
-			if (!(i >= _gridwidth || j >= _gridheight) || tmp_array[get_item_pos(j_target+j,i_target+i)]) {
+			if ((i + target_row) >= _gridheight || (j + target_col) >= _gridwidth || tmp_array[get_item_pos(target_row+i,target_col+j)]) {
+				PRINT_DEBUG_MESSAGE("item doesn't fit in target");
 				return false;
 			}
 		}
@@ -218,15 +214,15 @@ bool UInventoryComponent::CanMove(AItem * item, const uint8 j_target, const uint
 void UInventoryComponent::SetItem(AItem * item,uint8 row,uint8 column)
 {
 	if (item) {
-		for (uint8 i {column}; i < (column + item->GetYSize()) && i < _gridwidth; ++i) {
-			for (uint8 j {row}; j < (row + item->GetXSize()) && j < _gridheight; ++j) {
-				set_item(j, i, item);
+		for (uint8 i {row}; i < (row + item->GetYSize()) && i < _gridheight; ++i) {
+			for (uint8 j {column}; j < (column + item->GetXSize()) && j < _gridwidth; ++j) {
+				set_item(i, j, item);
 			}
 		}
 	}
 }
 
-bool UInventoryComponent::CanFit(AItem * item, uint8 & x, uint8 & y)
+bool UInventoryComponent::CanFit(AItem * item, uint8 & column, uint8 & row) const
 {
 	if (!item) {
 		return false;
@@ -243,8 +239,8 @@ bool UInventoryComponent::CanFit(AItem * item, uint8 & x, uint8 & y)
 					}
 				}
 				if (has_space) {
-					y = i;
-					x = j;
+					row = i;
+					column = j;
 					return true;
 				}
 			}
@@ -253,7 +249,7 @@ bool UInventoryComponent::CanFit(AItem * item, uint8 & x, uint8 & y)
 	return false;
 }
 
-bool UInventoryComponent::Contains(AItem * item,uint8 & x,uint8 & y)
+bool UInventoryComponent::Contains(AItem * item,uint8 & column,uint8 & row) const
 {
 	if (!item) {
 		return false;
@@ -261,8 +257,8 @@ bool UInventoryComponent::Contains(AItem * item,uint8 & x,uint8 & y)
 	for (uint8 i {0}; i < _gridheight; ++i) {
 		for (uint8 j {0}; j < _gridwidth; ++j) {
 			if (get_item(i,j) == item) {
-				x = j;
-				y = i;
+				column = j;
+				row = i;
 				return true;
 			}
 		}

@@ -35,17 +35,17 @@ public:
 	virtual void Remove(AItem* item);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	virtual bool CanFit(AItem* item);
+	virtual bool CanFit(AItem* item) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	virtual bool Contains(AItem* item);
+	virtual bool Contains(AItem* item) const;
 
 	UFUNCTION()
-	bool MoveItem(AItem* item, const uint8 j, const uint8 i);
+	bool MoveItem(AItem* item, const uint8 target_col, const uint8 target_row);
 
 	/* Checks if item can be moved to i,j, even by swaping if necesseary */
 	UFUNCTION()
-	bool CanMove(AItem* item, const uint8 j, const uint8 i);
+	bool CanMove(AItem* item, const uint8 target_col, const uint8 target_row) const;
 
 protected:
 	
@@ -56,9 +56,9 @@ private:
 
 	/* checks if item can fit in inventory, and gives x,y coordinates,
 		x,y are untouched if CanFIt returns false */
-	bool CanFit(AItem* item, uint8& x, uint8& y);
+	bool CanFit(AItem* item, uint8& column, uint8& row) const;
 
-	bool Contains(AItem* item, uint8& x, uint8& y);
+	bool Contains(AItem* item, uint8& column, uint8& row) const;
 
 
 	/* Mini matrix class */
@@ -66,14 +66,14 @@ private:
 		from another translation unit
 	*/
 	/* To have a single place where the coefs are calculated */
-	uint8 get_item_pos(const uint8 y, const uint8 x) {
-		return _gridwidth * y + x;
+	uint8 get_item_pos(const uint8 row, const uint8 column) const {
+		return _gridwidth * row + column;
 	}
-	AItem* get_item(const uint8 y, const uint8 x) {
-		return _grid[get_item_pos(y, x)];
+	AItem* get_item(const uint8 row, const uint8 column) const {
+		return _grid[get_item_pos(row, column)];
 	}
-	void set_item(const uint8 y, const uint8 x, AItem* item_ptr) {
-		_grid[get_item_pos(y, x)] = item_ptr;
+	void set_item(const uint8 row, const uint8 column, AItem* item_ptr) {
+		_grid[get_item_pos(row, column)] = item_ptr;
 	}
 
 	uint8 _gridheight;

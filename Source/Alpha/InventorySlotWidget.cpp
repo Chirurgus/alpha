@@ -40,7 +40,7 @@ bool UInventorySlotWidget::HandleOnDrop(FGeometry MyGeometry,
 {
 	if (UInventoryDragDropOperation* ddop {Cast<UInventoryDragDropOperation>(Operation)}) {
 		if (UUniformGridSlot* ugp {Cast<UUniformGridSlot>(Slot)}) {
-			bool b {_parent->MoveItem(ddop->GetItem(), ugp->Row, ugp->Column)};
+			bool b {_parent->MoveItem(ddop->GetItem(), ugp->Column, ugp->Row)};
 			UE_LOG(ALog, Log,TEXT("Move result: %s"), b ? TEXT("1") : TEXT("0"));
 			return b;
 		}
