@@ -49,14 +49,7 @@ void UInventoryWidget::ResizeGridPanel(UUniformGridPanel * const grid,
 void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
 										 const TSubclassOf<UInventorySlotWidget> slot_t)
 {
-	/* if grid is not of appropriate size */
-	/*
-	if (_inventory->_grid.Num() != grid->GetChildrenCount() ||
-		Cast<UUniformGridSlot>(grid->GetChildAt(grid->GetChildrenCount() - 1))->Row
-		!= _inventory->GetYSize() - 1 ||
-		Cast<UUniformGridSlot>(grid->GetChildAt(grid->GetChildrenCount() - 1))->Column
-		!= _inventory->GetXSize() - 1)
-		*/
+	if (_inventory->_grid.Num() != grid->GetChildrenCount())
 	{
 		grid->ClearChildren();
 		ResizeGridPanel(grid, slot_t);
@@ -65,9 +58,6 @@ void UInventoryWidget::PopulateGridPanel(UUniformGridPanel * const grid,
 		for (uint8 j {0}; j < _inventory->GetXSize(); ++j) {
 			UInventorySlotWidget* grid_slot {get_slot(i,j,grid)};
 			grid_slot->SetItem(_inventory->get_item(i,j));;
-			/*
-			grid_slot->SetPosition(i,j);
-			*/
 		}
 	}
 }
