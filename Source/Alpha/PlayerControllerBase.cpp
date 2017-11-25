@@ -41,7 +41,8 @@ void APlayerControllerBase::SetupInputComponent()
 		InputComponent->BindAction("Sprint",IE_Pressed, this, &APlayerControllerBase::SprintPressed);
 		InputComponent->BindAction("Sprint",IE_Released, this, &APlayerControllerBase::SprintReleased);
 		InputComponent->BindAction("PauseMenu",IE_Pressed, this, &APlayerControllerBase::PauseMenuButtonPressed);
-		//InputComponent->BindAction("PauseMenu",IE_Released, this, &APlayerControllerBase::ClosePauseMenu);
+		InputComponent->BindAction("Aim",IE_Pressed, this, &APlayerControllerBase::AimPressed);
+		InputComponent->BindAction("Aim",IE_Released, this, &APlayerControllerBase::AimReleased);
 
 	}
 	else {
@@ -238,6 +239,22 @@ void APlayerControllerBase::PauseMenuButtonPressed() {
 	}
 }
 
+void APlayerControllerBase::AimPressed()
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->AimPressed();
+	}
+}
+
+void APlayerControllerBase::AimReleased()
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->AimReleased();
+	}
+}
+
 void APlayerControllerBase::OpenPauseMenu()
 {
 	AHUDBase* hud {Cast<AHUDBase>(GetHUD())};
@@ -270,3 +287,4 @@ void APlayerControllerBase::ClosePauseMenu()
 	}
 
 }
+

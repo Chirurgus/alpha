@@ -150,6 +150,16 @@ void ACharacterBase::SprintReleased()
 	_is_sprinting = false;
 }
 
+void ACharacterBase::AimPressed()
+{
+	_is_aiming = true;
+}
+
+void ACharacterBase::AimReleased()
+{
+	_is_aiming = false;
+}
+
 UInventoryComponent * ACharacterBase::GetInventoryComponent()
 {
 	return _InventoryComponent;
@@ -170,6 +180,11 @@ void ACharacterBase::Die()
 	PRINT_DEBUG_MESSAGE("YOU DIED");
 	PRINT_DEBUG_MESSAGE("OH, DON'T CRY, HERE, HAVE ANOTHER TRY!");
 	_Health = GetMaxHealh();
+}
+
+bool ACharacterBase::IsAiming() const
+{
+	return _is_aiming;
 }
 
 float ACharacterBase::TakeDamage(float damage,const FDamageEvent&,AController*,AActor*)

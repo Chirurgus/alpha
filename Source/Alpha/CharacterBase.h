@@ -48,6 +48,10 @@ public:
 	virtual void SprintPressed();
 	UFUNCTION()
 	virtual void SprintReleased();
+	UFUNCTION()
+	virtual void AimPressed();
+	UFUNCTION()
+	virtual void AimReleased();
 	
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	UInventoryComponent* GetInventoryComponent();
@@ -60,6 +64,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	void Die();
+
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+	bool IsAiming() const;
+
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	float TakeDamage(float damage,
@@ -89,4 +97,5 @@ protected:
 
  private:
 	bool _is_sprinting {false};
+	bool _is_aiming {false};
 };

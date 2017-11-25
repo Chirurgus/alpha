@@ -38,6 +38,8 @@ class ALPHA_API APlayerControllerBase : public APlayerController
 	void SprintPressed();
 	void SprintReleased();
 	void PauseMenuButtonPressed();
+	void AimPressed();
+	void AimReleased();
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
