@@ -46,7 +46,7 @@ void APlayerControllerBase::SetupInputComponent()
 
 	}
 	else {
-		UE_LOG(ALog, Warning, TEXT("InputComponent is null"));
+		UE_LOG(ALog, Error, TEXT("InputComponent is null"));
 	}
 }
 
