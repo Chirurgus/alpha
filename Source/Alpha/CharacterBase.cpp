@@ -30,6 +30,8 @@ ACharacterBase::ACharacterBase()
 
 	GetCapsuleComponent()->OnComponentBeginOverlap
 		.AddDynamic(this, &ACharacterBase::OnBeginOverlapItem);
+
+	_MaxSprintSpeed = 900;
 }
 
 // Called when the game starts or when spawned
@@ -102,12 +104,13 @@ void ACharacterBase::LookRight(float v)
 
 void ACharacterBase::JumpPress()
 {
-	Jump();
+	/* The actual jump is made via animation Notify */
+	_is_jump_pressed = true;
 }
 
 void ACharacterBase::JumpRelease()
 {
-	StopJumping();
+	_is_jump_pressed = false;
 }
 
 void ACharacterBase::ShootPressed()
@@ -141,12 +144,12 @@ void ACharacterBase::CrouchReleased()
 void ACharacterBase::SprintPressed()
 {
 	_is_sprinting = true;
-	GetCharacterMovement()->MaxWalkSpeed *= 2;
+	GetCharacterMovement()->MaxWalkSpeed = _MaxSprintSpeed;
 }
 
 void ACharacterBase::SprintReleased()
 {
-	GetCharacterMovement()->MaxWalkSpeed /= 2;
+	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->GetMaxSpeed();
 	_is_sprinting = false;
 }
 
@@ -158,6 +161,16 @@ void ACharacterBase::AimPressed()
 void ACharacterBase::AimReleased()
 {
 	_is_aiming = false;
+}
+
+float ACharacterBase::GetMaxSprintSpeed()
+{
+	return _MaxSprintSpeed;
+}
+
+bool ACharacterBase::IsJumpPressed()
+{
+	return _is_jump_pressed;
 }
 
 UInventoryComponent * ACharacterBase::GetInventoryComponent()

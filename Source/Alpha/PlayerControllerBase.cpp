@@ -163,7 +163,7 @@ void APlayerControllerBase::JumpPress()
 {
 	pawn_type* cp {Cast<pawn_type>(GetPawn())};
 	if (cp && !cp->IsJumpProvidingForce()) {// same as IsJumping
-		cp->Jump();
+		cp->JumpPress();
 	}
 }
 

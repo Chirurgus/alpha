@@ -24,6 +24,7 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
+	/* Movement */
 	UFUNCTION()
 	virtual void MoveForward(float v);
 	UFUNCTION()
@@ -53,9 +54,25 @@ public:
 	UFUNCTION()
 	virtual void AimReleased();
 	
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	float GetMaxSprintSpeed();
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	bool IsJumpPressed();
+
+	/* Inventory */
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	UInventoryComponent* GetInventoryComponent();
 	
+	UFUNCTION(Category = "Inventory")
+	void OnBeginOverlapItem(UPrimitiveComponent* comp,
+							AActor * other_actor,
+							UPrimitiveComponent* other_comop,
+							int32 other_body_index,
+							bool from_sweep,
+							const FHitResult& sweep_result);
+
+	/* Health */
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	float GetHealth() const;
 
@@ -65,24 +82,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	void Die();
 
-	UFUNCTION(BlueprintCallable, Category = "Animation")
-	bool IsAiming() const;
-
-
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	float TakeDamage(float damage,
 				     const FDamageEvent& dmg_event,
 					 AController* dmg_instigator,
 					 AActor* dmg_causer) override;
+
 	float TakeDamageTest(float damage);
 
-	UFUNCTION(Category = "Inventory")
-	void OnBeginOverlapItem(UPrimitiveComponent* comp,
-							AActor * other_actor,
-							UPrimitiveComponent* other_comop,
-							int32 other_body_index,
-							bool from_sweep,
-							const FHitResult& sweep_result);
+	/* Animation */
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+	bool IsAiming() const;
+
+
+
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
@@ -94,8 +107,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float _Health;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float _MaxSprintSpeed;
+
 
  private:
 	bool _is_sprinting {false};
 	bool _is_aiming {false};
+	bool _is_jump_pressed {false};
 };
