@@ -26,12 +26,17 @@ ACharacterBase::ACharacterBase()
 	_CameraComponent->AttachTo(_CameraBoonComponent);
 	*/
 	
+	_MaxSprintSpeed = 600;
+	_MaxWalkSpeed = 300;
+	_MaxCrouchSpeed = 200;
+
+	GetCharacterMovement()->MaxWalkSpeedCrouched = _MaxCrouchSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = _MaxWalkSpeed;
+
 	GetMesh()->SetOwnerNoSee(false);
 
 	GetCapsuleComponent()->OnComponentBeginOverlap
 		.AddDynamic(this, &ACharacterBase::OnBeginOverlapItem);
-
-	_MaxSprintSpeed = 900;
 }
 
 // Called when the game starts or when spawned
@@ -149,7 +154,7 @@ void ACharacterBase::SprintPressed()
 
 void ACharacterBase::SprintReleased()
 {
-	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->GetMaxSpeed();
+	GetCharacterMovement()->MaxWalkSpeed = _MaxWalkSpeed;
 	_is_sprinting = false;
 }
 
@@ -163,9 +168,19 @@ void ACharacterBase::AimReleased()
 	_is_aiming = false;
 }
 
-float ACharacterBase::GetMaxSprintSpeed()
+float ACharacterBase::GetMaxWalkSpeed() const
+{
+	return _MaxWalkSpeed;
+}
+
+float ACharacterBase::GetMaxSprintSpeed() const
 {
 	return _MaxSprintSpeed;
+}
+
+float ACharacterBase::GetMaxCrouchSpeed() const
+{
+	return _MaxCrouchSpeed;
 }
 
 bool ACharacterBase::IsJumpPressed()

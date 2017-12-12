@@ -55,7 +55,13 @@ public:
 	virtual void AimReleased();
 	
 	UFUNCTION(BlueprintCallable, Category = "Movement")
-	float GetMaxSprintSpeed();
+	float GetMaxWalkSpeed() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	float GetMaxSprintSpeed() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	float GetMaxCrouchSpeed() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	bool IsJumpPressed();
@@ -110,6 +116,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float _MaxSprintSpeed;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float _MaxWalkSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float _MaxCrouchSpeed;
 
  private:
 	bool _is_sprinting {false};
