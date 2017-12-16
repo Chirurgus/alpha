@@ -23,8 +23,6 @@ class ALPHA_API APlayerControllerBase : public APlayerController
 	void Possess(APawn* pawn) override;
 	void UnPossess() override;
 
-	void SetupCamera();
-
 	void MoveForward(float v);
 	void MoveRight(float v);
 	void JumpPress();
@@ -42,8 +40,6 @@ class ALPHA_API APlayerControllerBase : public APlayerController
 	void AimReleased();
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
-	AThirdPersonCameraActor* _CameraActor;
 
 private:
 	void OpenPauseMenu();

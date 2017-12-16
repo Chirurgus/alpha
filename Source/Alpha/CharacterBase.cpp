@@ -37,6 +37,8 @@ ACharacterBase::ACharacterBase()
 
 	GetCapsuleComponent()->OnComponentBeginOverlap
 		.AddDynamic(this, &ACharacterBase::OnBeginOverlapItem);
+
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
 // Called when the game starts or when spawned

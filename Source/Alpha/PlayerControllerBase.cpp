@@ -13,14 +13,7 @@
 
 APlayerControllerBase::APlayerControllerBase()
 	: Super{}
-	, _CameraActor {nullptr}
-	/*
-	, _CameraComponent {CreateDefaultSubobject<UCameraComponent>("Camera Component")}
-	, _SpringArmComponent {CreateDefaultSubobject<USpringArmComponent>("Spring arm component")}
-	*/
 {
-	SetupCamera();
-
 	IgnoreLookInput = false;
 }
 
@@ -70,68 +63,17 @@ void APlayerControllerBase::BeginPlay()
 void APlayerControllerBase::Possess(APawn * pawn)
 {
 	Super::Possess(pawn);
-	if (!_CameraActor) {
-		UWorld* world {GetWorld()};
-		if (!world) {
-			UE_LOG(ALog, Warning, TEXT("Could not spawn camera, GetWorld() is null."));
-			return;
-		}
-
-		FActorSpawnParameters spawn_param;
-		spawn_param.Owner = this;
-		spawn_param.Instigator = pawn;
-		spawn_param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		_CameraActor = world->SpawnActor<AThirdPersonCameraActor>(
-			pawn->GetActorLocation(),
-			pawn->GetActorRotation(),
-			spawn_param);
-		if (!_CameraActor) {
-			UE_LOG(ALog, Warning, TEXT("Could not spawn camera, GetWorld() is null."));
-			return;
-		}
-	}
-	_CameraActor->AttachToActor(
-		pawn,
-		FAttachmentTransformRules {
-			EAttachmentRule::KeepRelative,
-			EAttachmentRule::KeepRelative,
-			EAttachmentRule::KeepRelative,
-			true
-		}
-	);
-
-	_CameraActor->SetActorRelativeLocation(FVector {0, 0, 80});
-	//PlayerCameraManager->SetViewTarget(_CameraActor, FViewTargetTransitionParams {});
-	PlayerCameraManager->ViewTarget.Target = _CameraActor;
 }
 
 void APlayerControllerBase::UnPossess()
 {
-	/* TODO:
-		Maybe this should be handled differently, perhaps, the actor
-		sould be unspawned.
-	*/
-	_CameraActor = nullptr;
-}
 
-void APlayerControllerBase::SetupCamera()
-{
-	//PlayerCameraManagerClass = ACameraManager::StaticClass();
-
-	/*
-	_SpringArmComponent->SetupAttachment(RootComponent);
-	_CameraComponent->SetupAttachment(_SpringArmComponent);
-
-	_SpringArmComponent->TargetArmLength = 300;
-	*/
 }
 
 void APlayerControllerBase::LookUp(float v)
 {
 	if (v != 0) {
-		//See "Fix the 3rd person camers" issue discussion for explanation.
-		//AddPitchInput(v);	
-		_CameraActor->AddActorLocalRotation(FRotator {InputPitchScale * -v, 0, 0});
+		AddPitchInput(-v);	
 	}
 }
 
@@ -139,7 +81,6 @@ void APlayerControllerBase::LookRight(float v)
 {
 	if (v != 0) {
 		AddYawInput(v);
-		//_CameraActor->AddActorLocalRotation(FRotator {0, InputYawScale * v, 0});
 	}
 }
 
