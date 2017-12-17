@@ -3,7 +3,7 @@
 #pragma once
 
 #include "GameFramework/PlayerController.h"
-#include "CharacterBase.h"
+#include "PlayerCharacter.h"
 #include "ThirdPersonCameraActor.h"
 #include "PlayerControllerBase.generated.h"
 
@@ -45,5 +45,5 @@ private:
 	void OpenPauseMenu();
 	void ClosePauseMenu();
 
-	using pawn_type = ACharacterBase;
+	using pawn_type = APlayerCharacter;
 };

@@ -7,25 +7,13 @@
 
 ACharacterBase::ACharacterBase()
 	: Super {}
-	/*, _CameraBoonComponent 
-		{CreateDefaultSubobject<USpringArmComponent>("Camera boon component")}
-	, _CameraComponent
-		{CreateDefaultSubobject<UCameraComponent>("Camera component")}*/
 	, _ActiveInventoryComponent
 		{CreateDefaultSubobject<UActiveInventoryComponent>("Active inventory component")}
 	, _InventoryComponent
 		{CreateDefaultSubobject<UInventoryComponent>("Inventory component")}
 { 	
-	// Set this character to call Tick() every frame. 
-	//You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	/*
-	_CameraBoonComponent->AttachTo(RootComponent);
-
-	_CameraComponent->AttachTo(_CameraBoonComponent);
-	*/
-	
 	_MaxSprintSpeed = 600;
 	_MaxWalkSpeed = 300;
 	_MaxCrouchSpeed = 200;
@@ -35,13 +23,8 @@ ACharacterBase::ACharacterBase()
 
 	GetMesh()->SetOwnerNoSee(false);
 
-	GetCapsuleComponent()->OnComponentBeginOverlap
-		.AddDynamic(this, &ACharacterBase::OnBeginOverlapItem);
-
-	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
-// Called when the game starts or when spawned
 void ACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
@@ -64,112 +47,11 @@ void ACharacterBase::BeginPlay()
 	*/
 }
 
-// Called every frame
 void ACharacterBase::Tick( float DeltaTime )
 {
 	Super::Tick(DeltaTime);
 
 }
-
-void ACharacterBase::MoveForward(float v)
-{
-	if (v && Controller) {
-		// find out which way is right
-		const FRotator rotation {Controller->GetControlRotation()};
-		const FRotator yaw_rotation {0, rotation.Yaw, 0};
-	
-		// get right vector 
-		const FVector dir {FRotationMatrix(yaw_rotation).GetUnitAxis(EAxis::X)};
-		// add movement in that direction
-		AddMovementInput(dir, v);
-	}
-}
-
-void ACharacterBase::MoveRight(float v)
-{
-	if (v && Controller) {
-		// find out which way is right
-		const FRotator rotation {Controller->GetControlRotation()};
-		const FRotator yaw_rotation {0, rotation.Yaw, 0};
-	
-		// get right vector 
-		const FVector dir {FRotationMatrix(yaw_rotation).GetUnitAxis(EAxis::Y)};
-		// add movement in that direction
-		AddMovementInput(dir, v);
-	}
-}
-
-void ACharacterBase::LookUp(float v)
-{
-	AddControllerPitchInput(-v);
-}
-
-void ACharacterBase::LookRight(float v)
-{
-	AddControllerYawInput(v);
-}
-
-void ACharacterBase::JumpPress()
-{
-	/* The actual jump is made via animation Notify */
-	_is_jump_pressed = true;
-}
-
-void ACharacterBase::JumpRelease()
-{
-	_is_jump_pressed = false;
-}
-
-void ACharacterBase::ShootPressed()
-{
-
-	AGunBase* gun
-		{Cast<AGunBase>(_ActiveInventoryComponent->GetEquippedWeapon())};
-	if (gun) {
-		gun->Use();
-	}
-	else {
-		UE_LOG(ALog, Log, TEXT("No weapon equipped, can't fire."));
-	}
-}
-
-void ACharacterBase::ShootReleased()
-{
-}
-
-
-void ACharacterBase::CrouchPressed()
-{
-	Crouch();
-}
-
-void ACharacterBase::CrouchReleased()
-{
-	UnCrouch();
-}
-
-void ACharacterBase::SprintPressed()
-{
-	_is_sprinting = true;
-	GetCharacterMovement()->MaxWalkSpeed = _MaxSprintSpeed;
-}
-
-void ACharacterBase::SprintReleased()
-{
-	GetCharacterMovement()->MaxWalkSpeed = _MaxWalkSpeed;
-	_is_sprinting = false;
-}
-
-void ACharacterBase::AimPressed()
-{
-	_is_aiming = true;
-}
-
-void ACharacterBase::AimReleased()
-{
-	_is_aiming = false;
-}
-
 float ACharacterBase::GetMaxWalkSpeed() const
 {
 	return _MaxWalkSpeed;
@@ -237,25 +119,5 @@ float ACharacterBase::TakeDamageTest(float damage)
 		}
 	}
 	return damage;
-}
-
-void ACharacterBase::OnBeginOverlapItem(UPrimitiveComponent* comp,
-										AActor * other_actor,
-										UPrimitiveComponent* other_comop,
-										int32,
-										bool,
-										const FHitResult&)
-{
-	UE_LOG(ALog, Log, TEXT("Overlapping an actor"));
-	AWeapon* item {Cast<AWeapon>(other_actor)};
-	if (!item) {
-		return;	
-	}
-	if (_InventoryComponent->Add(item)) {
-		PRINT_DEBUG_MESSAGE("true");
-	}
-	else {
-		PRINT_DEBUG_MESSAGE("FALSE");
-	}
 }
 
