@@ -33,6 +33,9 @@ APlayerCharacter::APlayerCharacter()
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	/* Movement */
+	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
 }
 
 void APlayerCharacter::MoveForward(float v)
@@ -127,12 +130,18 @@ void APlayerCharacter::SprintReleased()
 void APlayerCharacter::AimPressed()
 {
 	GetCharacterMovement()->bOrientRotationToMovement = false;
+	bUseControllerRotationYaw = true;
+	FRotator init_r{_SpringArmComponent->GetComponentTransform().GetRotation()};
+	FRotator target_r {init_r};
+	target_r.Yaw = 0;
+	_SpringArmComponent->SetRelativeRotation(FMath::Lerp(init_r, target_r, 0.1f));
 	_is_aiming = true;
 }
 
 void APlayerCharacter::AimReleased()
 {
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+	bUseControllerRotationYaw = false;
 	_is_aiming = false;
 }
 
