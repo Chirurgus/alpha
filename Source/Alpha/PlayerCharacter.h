@@ -17,7 +17,8 @@ class ALPHA_API APlayerCharacter : public ACharacterBase
 public:
 	APlayerCharacter();
 
-	/* Movement */
+	/* Animation */
+		/* Movement */
 	UFUNCTION()
 	virtual void MoveForward(float v);
 	UFUNCTION()
@@ -61,6 +62,4 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	UCameraComponent* _CameraComponent;
-
-
 };

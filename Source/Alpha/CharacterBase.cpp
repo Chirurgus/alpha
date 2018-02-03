@@ -72,6 +72,11 @@ bool ACharacterBase::IsJumpPressed()
 	return _is_jump_pressed;
 }
 
+bool ACharacterBase::IsShootPressed() const
+{
+	return _is_shoot_pressed;
+}
+
 UInventoryComponent * ACharacterBase::GetInventoryComponent()
 {
 	return _InventoryComponent;

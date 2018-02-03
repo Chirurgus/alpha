@@ -89,7 +89,6 @@ void APlayerCharacter::JumpRelease()
 
 void APlayerCharacter::ShootPressed()
 {
-
 	AGunBase* gun
 		{Cast<AGunBase>(_ActiveInventoryComponent->GetEquippedWeapon())};
 	if (gun) {
@@ -98,10 +97,13 @@ void APlayerCharacter::ShootPressed()
 	else {
 		UE_LOG(ALog, Log, TEXT("No weapon equipped, can't fire."));
 	}
+
+	_is_shoot_pressed = true;
 }
 
 void APlayerCharacter::ShootReleased()
 {
+	_is_shoot_pressed = false;
 }
 
 

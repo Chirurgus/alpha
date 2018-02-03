@@ -60,6 +60,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 	bool IsAiming() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+	bool IsShootPressed() const;
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	UActiveInventoryComponent* _ActiveInventoryComponent;
@@ -82,4 +85,5 @@ protected:
 	bool _is_sprinting {false};
 	bool _is_aiming {false};
 	bool _is_jump_pressed {false};
+	bool _is_shoot_pressed {false};
 };
