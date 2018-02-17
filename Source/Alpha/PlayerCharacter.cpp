@@ -159,11 +159,8 @@ void APlayerCharacter::OnBeginOverlapItem(UPrimitiveComponent* comp,
 	if (!item) {
 		return;	
 	}
-	if (_InventoryComponent->Add(item)) {
-		PRINT_DEBUG_MESSAGE("true");
-	}
-	else {
-		PRINT_DEBUG_MESSAGE("FALSE");
+	if (!_ActiveInventoryComponent->EquipWeapon(item)) {
+		_InventoryComponent->Add(item);
 	}
 }
 
