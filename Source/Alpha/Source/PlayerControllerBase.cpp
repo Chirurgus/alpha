@@ -53,6 +53,12 @@ void APlayerControllerBase::BeginPlay()
 				FName {"BasicHUD"}
 			);
 		}
+		if (!hud->IsWidgetInCategory(EUiCategory::HUD, FName {"Crosshairs"})) {
+			hud->AddToCategory(
+				EUiCategory::HUD,
+				FName {"Crosshairs"}
+			);
+		}
 		hud->ShowUi(EUiCategory::HUD);
 	}
 	else {
