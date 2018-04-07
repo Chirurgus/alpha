@@ -16,7 +16,7 @@ APlayerCharacter::APlayerCharacter()
 {
 	/* Setup Camera */
 	_SpringArmComponent->SetupAttachment(GetRootComponent());
-	_SpringArmComponent->bUseControllerViewRotation = true;
+	_SpringArmComponent->bUsePawnControlRotation = true;
 	_SpringArmComponent->bInheritPitch = true;
 	_SpringArmComponent->bInheritRoll = false;
 	_SpringArmComponent->bInheritYaw = true;
@@ -37,6 +37,41 @@ APlayerCharacter::APlayerCharacter()
 
 	/* Movement */
 	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
+}
+
+// Implimentation from "Survival sample game"
+AInteractableActor* APlayerCharacter::RaytraceInteractableActor()
+{
+    if (!GetController()) {
+        return nullptr;
+	}
+
+	FVector location {};
+	FRotator rotation {};
+
+    GetController()->GetPlayerViewPoint(location, rotation);
+
+    FCollisionQueryParams trace_params {
+		FName(TEXT("TraceUsableActor")), true, this
+	};
+    trace_params.bTraceAsyncScene = true;
+    trace_params.bReturnPhysicalMaterial = false;
+    trace_params.bTraceComplex = true;
+
+    // FHitResults is passed in with the trace function and holds the result of the trace.
+    FHitResult hit(EForceInit::ForceInit);
+    GetWorld()->LineTraceSingle(
+		hit,
+		location,// Trace begin
+		location + (MaxTraceDistance * rotation.Vector()),// Trace end
+		ECC_Visibility,
+		trace_params
+	);
+
+    /* Uncomment this to visualize your line during gameplay. */
+    //DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 1.0f);
+
+    return Cast<AInteractableActor>(hit.GetActor());
 }
 
 void APlayerCharacter::MoveForward(float v)
