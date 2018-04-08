@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 
 #include "CharacterBase.h"
+
+#include "InteractableActor.h"
+
 #include "PlayerCharacter.generated.h"
 
 /**
@@ -17,6 +20,12 @@ class ALPHA_API APlayerCharacter : public ACharacterBase
 	
 public:
 	APlayerCharacter();
+
+	void Tick(float delta) override;
+
+	/* Interaction */
+	UFUNCTION()
+	AInteractableActor* RaytraceInteractableActor();
 
 	/* Animation */
 		/* Movement */
@@ -57,6 +66,9 @@ public:
 							bool from_sweep,
 							const FHitResult& sweep_result);
 protected:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
+	float _MaxTraceDistance;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	USpringArmComponent* _SpringArmComponent;
