@@ -21,6 +21,8 @@ class ALPHA_API APlayerCharacter : public ACharacterBase
 public:
 	APlayerCharacter();
 
+	void Tick(float delta) override;
+
 	/* Interaction */
 	UFUNCTION()
 	AInteractableActor* RaytraceInteractableActor();
@@ -66,7 +68,7 @@ public:
 protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
-	float MaxTraceDistance {100};
+	float _MaxTraceDistance;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	USpringArmComponent* _SpringArmComponent;

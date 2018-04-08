@@ -3,6 +3,7 @@
 #include "Include/Alpha.h"
 
 #include "Include/Item/GunBase.h"
+
 #include "Include/Character/PlayerCharacter.h"
 
 
@@ -13,6 +14,7 @@ APlayerCharacter::APlayerCharacter()
 		{CreateDefaultSubobject<USpringArmComponent>("Camera boon component")}
 	, _CameraComponent
 		{CreateDefaultSubobject<UCameraComponent>("Camera component")}
+	, _MaxTraceDistance {100}
 {
 	/* Setup Camera */
 	_SpringArmComponent->SetupAttachment(GetRootComponent());
@@ -39,6 +41,17 @@ APlayerCharacter::APlayerCharacter()
 	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
 }
 
+void APlayerCharacter::Tick(float delta)
+{
+	auto* hit {RaytraceInteractableActor()};
+	if (hit) {
+		PRINT_DEBUG_MESSAGE(hit->GetInteractableName());
+	}
+	else {
+		PRINT_DEBUG_MESSAGE("nothing");
+	}
+}
+
 // Implimentation from "Survival sample game"
 AInteractableActor* APlayerCharacter::RaytraceInteractableActor()
 {
@@ -60,12 +73,13 @@ AInteractableActor* APlayerCharacter::RaytraceInteractableActor()
 
     // FHitResults is passed in with the trace function and holds the result of the trace.
     FHitResult hit(EForceInit::ForceInit);
-    GetWorld()->LineTraceSingle(
-		hit,
+    GetWorld()->LineTraceSingleByChannel(
+		hit,// result
 		location,// Trace begin
-		location + (MaxTraceDistance * rotation.Vector()),// Trace end
-		ECC_Visibility,
-		trace_params
+		location + (_MaxTraceDistance * rotation.Vector()),// Trace end
+		ECC_Visibility,// Collision chanel
+		trace_params,
+		FCollisionResponseParams::DefaultResponseParam
 	);
 
     /* Uncomment this to visualize your line during gameplay. */
