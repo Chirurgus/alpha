@@ -43,7 +43,7 @@ APlayerCharacter::APlayerCharacter()
 
 void APlayerCharacter::Tick(float delta)
 {
-	auto* hit {RaytraceInteractableActor()};
+	AInteractableActor* hit {RaytraceInteractableActor()};
 	if (hit) {
 		PRINT_DEBUG_MESSAGE(hit->GetInteractableName());
 	}
