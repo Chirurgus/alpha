@@ -14,7 +14,7 @@ APlayerCharacter::APlayerCharacter()
 		{CreateDefaultSubobject<USpringArmComponent>("Camera boon component")}
 	, _CameraComponent
 		{CreateDefaultSubobject<UCameraComponent>("Camera component")}
-	, _MaxTraceDistance {100}
+	, _MaxTraceDistance {200}
 {
 	/* Setup Camera */
 	_SpringArmComponent->SetupAttachment(GetRootComponent());
@@ -47,9 +47,6 @@ void APlayerCharacter::Tick(float delta)
 	if (hit) {
 		PRINT_DEBUG_MESSAGE(hit->GetInteractableName());
 	}
-	else {
-		PRINT_DEBUG_MESSAGE("nothing");
-	}
 }
 
 // Implimentation from "Survival sample game"
@@ -65,7 +62,7 @@ AInteractableActor* APlayerCharacter::RaytraceInteractableActor()
     GetController()->GetPlayerViewPoint(location, rotation);
 
     FCollisionQueryParams trace_params {
-		FName(TEXT("TraceUsableActor")), true, this
+		FName(TEXT("TraceInteractableActor")), true, this
 	};
     trace_params.bTraceAsyncScene = true;
     trace_params.bReturnPhysicalMaterial = false;
@@ -84,7 +81,9 @@ AInteractableActor* APlayerCharacter::RaytraceInteractableActor()
 
     /* Uncomment this to visualize your line during gameplay. */
     //DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 1.0f);
-
+	if (hit.GetActor()) {
+		PRINT_DEBUG_MESSAGE("Got an actor!");
+	}
     return Cast<AInteractableActor>(hit.GetActor());
 }
 
