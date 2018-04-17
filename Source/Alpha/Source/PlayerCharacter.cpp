@@ -81,9 +81,7 @@ AInteractableActor* APlayerCharacter::RaytraceInteractableActor()
 
     /* Uncomment this to visualize your line during gameplay. */
     //DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 1.0f);
-	if (hit.GetActor()) {
-		PRINT_DEBUG_MESSAGE("Got an actor!");
-	}
+
     return Cast<AInteractableActor>(hit.GetActor());
 }
 
