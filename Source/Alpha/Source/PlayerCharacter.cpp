@@ -79,8 +79,11 @@ AInteractableActor* APlayerCharacter::RaytraceInteractableActor()
 		FCollisionResponseParams::DefaultResponseParam
 	);
 
-    /* Uncomment this to visualize your line during gameplay. */
-    //DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 1.0f);
+    // Uncomment this to visualize your line during gameplay. */
+    //DrawDebugLine(GetWorld(), location,
+	//	location + (_MaxTraceDistance * rotation.Vector()),
+	//	FColor::Red, false, 1.0f );
+
 
     return Cast<AInteractableActor>(hit.GetActor());
 }

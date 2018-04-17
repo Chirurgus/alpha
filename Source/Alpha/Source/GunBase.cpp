@@ -2,6 +2,7 @@
 
 #include "Include/Alpha.h"
 
+#include "Include/Character/CharacterBase.h"
 #include "Include/Item/GunProjectile.h"
 #include "Include/Item/GunBase.h"
 
@@ -17,23 +18,24 @@ AGunBase::AGunBase()
 
 void AGunBase::Use()
 {
-
-	UE_LOG(ALog, Log, TEXT("Fireing."));
 	if (!_ProjectileClass) {
 		UE_LOG(ALog, Warning, TEXT("ProjectileClass in AGunBase is null"));
 		return;
 	}
 
-	/*
-	FVector camera_pos {GetActorLocation()};
-	FRotator camera_rot {GetActorRotation()};
-	//GetActorEyesViewPoint(camera_pos, camera_rot);
-	const FRotator muzzle_rot {camera_rot};
-	const FVector muzzle_pos {camera_pos
-		+ FTransform(camera_rot).TransformVector(_MuzzleOffset)};
-		*/
-	FVector muzzle_pos {GetRootComponent()->GetComponentLocation() + _MuzzleOffset};
-	FRotator fire_vect {GetRootComponent()->GetComponentRotation() + _FireVector};
+	auto* player {
+		Cast<ACharacterBase>(GetRootComponent()->GetAttachParent()
+													->GetAttachmentRootActor())
+	};
+	if (!player) {
+		UE_LOG(ALog, Warning, TEXT("AGUnBase isn't attached to a CharacterBase"));
+		return;
+	}
+
+	FVector muzzle_pos{};
+	FRotator fire_vect{};
+	player->GetController()->GetPlayerViewPoint(muzzle_pos, fire_vect);
+
 	UWorld* const world {GetWorld()};
 	if (world) {
 		FActorSpawnParameters spawn_param;

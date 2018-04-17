@@ -18,7 +18,6 @@ public:
 	// Sets default values for this actor's properties
 	AGunBase();
 
-
 	void Use() override;
 
 protected:
