@@ -29,10 +29,13 @@ public:
 	virtual bool UnEquip();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	virtual bool CanEquip(AActor* actor);
+	virtual bool CanEquip(AActor* actor) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	virtual bool IsEquipped();
+	virtual bool IsEquipped() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	virtual AActor* GetItemOwner() const;
 
 private:
 	AActor* _owner;

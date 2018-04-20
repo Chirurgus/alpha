@@ -35,14 +35,18 @@ bool AEquippable::UnEquip()
 	return true;
 }
 
-bool AEquippable::CanEquip(AActor* actor)
+bool AEquippable::CanEquip(AActor* actor) const
 {
 	return !IsEquipped() && actor != nullptr;
 }
 
-bool AEquippable::IsEquipped()
+bool AEquippable::IsEquipped() const
 {
 	return _owner != nullptr;
 }
 
 
+AActor* AEquippable::GetItemOwner() const
+{
+	return _owner;
+}
