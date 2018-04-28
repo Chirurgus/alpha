@@ -23,12 +23,9 @@ void AGunBase::Use()
 		return;
 	}
 
-	auto* player {
-		Cast<ACharacterBase>(GetRootComponent()->GetAttachParent()
-													->GetAttachmentRootActor())
-	};
+	auto* player {Cast<ACharacterBase>(GetItemOwner())};
 	if (!player) {
-		UE_LOG(ALog, Warning, TEXT("AGUnBase isn't attached to a CharacterBase"));
+		UE_LOG(ALog, Warning, TEXT("GunBase isn't attached to a CharacterBase"));
 		return;
 	}
 
