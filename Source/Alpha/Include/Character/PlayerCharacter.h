@@ -44,6 +44,10 @@ public:
 	UFUNCTION()
 	virtual void ShootPressed();
 	UFUNCTION()
+	virtual void InteractPressed();
+	UFUNCTION()
+	virtual void InteractReleased();
+	UFUNCTION()
 	virtual void ShootReleased();
 	UFUNCTION()
 	virtual void CrouchPressed();

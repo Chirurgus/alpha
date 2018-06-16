@@ -14,6 +14,7 @@ ACharacterBase::ACharacterBase()
 		{CreateDefaultSubobject<UActiveInventoryComponent>("Active inventory component")}
 	, _InventoryComponent
 		{CreateDefaultSubobject<UInventoryComponent>("Inventory component")}
+	, _in_cover {false}
 { 	
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -32,22 +33,6 @@ void ACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 	_Health = GetMaxHealh();
-	
-	/*
-	UWorld* world {GetWorld()};
-	if (world) {
-		FActorSpawnParameters sp;
-		sp.Owner = this;
-		AGunBase* gp {world->SpawnActor<AGunBase>(AGunBase::StaticClass(),
-												  GetActorLocation(),
-												  GetActorRotation(),
-												  sp)};
-		if (gp) {
-			gp->AttachRootComponentToActor(this);
-			_ActiveInventoryComponent->EquipWeapon(gp);
-		}
-	}
-	*/
 }
 
 void ACharacterBase::Tick( float DeltaTime )
@@ -70,11 +55,14 @@ float ACharacterBase::GetMaxCrouchSpeed() const
 	return _MaxCrouchSpeed;
 }
 
-bool ACharacterBase::IsJumpPressed()
+bool ACharacterBase::IsJumpPressed() const
 {
 	return _is_jump_pressed;
 }
-
+bool ACharacterBase::IsInCover() const
+{
+	return _in_cover;
+}
 bool ACharacterBase::IsShootPressed() const
 {
 	return _is_shoot_pressed;

@@ -38,6 +38,8 @@ class ALPHA_API APlayerControllerBase : public APlayerController
 	void PauseMenuButtonPressed();
 	void AimPressed();
 	void AimReleased();
+	void InteractPressed();
+	void InteractReleased();
 
 protected:
 

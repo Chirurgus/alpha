@@ -36,7 +36,8 @@ void APlayerControllerBase::SetupInputComponent()
 		InputComponent->BindAction("PauseMenu",IE_Pressed, this, &APlayerControllerBase::PauseMenuButtonPressed);
 		InputComponent->BindAction("Aim",IE_Pressed, this, &APlayerControllerBase::AimPressed);
 		InputComponent->BindAction("Aim",IE_Released, this, &APlayerControllerBase::AimReleased);
-
+		InputComponent->BindAction("Use", IE_Pressed, this, &APlayerControllerBase::InteractPressed);
+		InputComponent->BindAction("Use", IE_Released, this, &APlayerControllerBase::InteractReleased);
 	}
 	else {
 		UE_LOG(ALog, Error, TEXT("InputComponent is null"));
@@ -135,6 +136,22 @@ void APlayerControllerBase::ShootReleased()
 	pawn_type* cp {Cast<pawn_type>(GetPawn())};
 	if (cp) {
 		cp->ShootReleased();
+	}
+}
+
+void APlayerControllerBase::InteractPressed()
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->InteractPressed();
+	}
+}
+
+void APlayerControllerBase::InteractReleased()
+{
+	pawn_type* cp {Cast<pawn_type>(GetPawn())};
+	if (cp) {
+		cp->InteractReleased();
 	}
 }
 

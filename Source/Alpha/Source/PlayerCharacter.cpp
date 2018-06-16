@@ -156,6 +156,16 @@ void APlayerCharacter::ShootReleased()
 	_is_shoot_pressed = false;
 }
 
+void APlayerCharacter::InteractPressed()
+{
+	if (auto actor {RaytraceInteractableActor()}) {
+		actor->Interact();
+	}
+}
+
+void APlayerCharacter::InteractReleased()
+{
+}
 
 void APlayerCharacter::CrouchPressed()
 {

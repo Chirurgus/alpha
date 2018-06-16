@@ -33,7 +33,10 @@ public:
 	float GetMaxCrouchSpeed() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
-	bool IsJumpPressed();
+	bool IsJumpPressed() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	bool IsInCover() const;
 
 	/* Inventory */
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
@@ -82,6 +85,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float _MaxCrouchSpeed;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	bool _in_cover;
 
 	bool _is_sprinting {false};
 	bool _is_aiming {false};
