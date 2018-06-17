@@ -18,6 +18,9 @@ DECLARE_LOG_CATEGORY_EXTERN(ALogCritical, Log, All);
 
 namespace alpha
 {
+	enum class CustomDepthStencilValue{
+		interactable_outline = 255
+	};
 }//namespace alpha
 
 #endif

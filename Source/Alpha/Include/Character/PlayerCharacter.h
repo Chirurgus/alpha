@@ -79,4 +79,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	UCameraComponent* _CameraComponent;
+
+private:
+	UPROPERTY()
+	AInteractableActor* _focus_actor;
 };

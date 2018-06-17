@@ -16,8 +16,11 @@ class ALPHA_API AVisualActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AVisualActor();
-	
+
 protected:
+	UFUNCTION(BlueprintCallable, Category = "Mesh")
+	UStaticMeshComponent* GetActorMesh() const;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	UArrowComponent* _ArrowComponent;
 

@@ -78,6 +78,7 @@ bool UInventoryComponent::Add(AItem * item)
 	}
 	*/
 
+	PRINT_DEBUG_MESSAGE("Picked up: " + item->GetInteractableName());
 	return true;
 }
 

@@ -17,7 +17,13 @@ class ALPHA_API AInteractableActor : public AVisualActor, public IInteractable
 {
 	GENERATED_BODY()
 public:
-	AInteractableActor() {}
+	AInteractableActor();
+
+	UFUNCTION(BlueprintCallable, Category="Interactable")
+	void OnFocus();
+
+	UFUNCTION(BlueprintCallable, Category="Interactable")
+	void OnEndFocus();
 
 	// Interactable interface 
 	bool Interact() override { return false; }

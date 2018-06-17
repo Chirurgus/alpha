@@ -21,3 +21,8 @@ AVisualActor::AVisualActor()
 							}
 	);
 }
+
+UStaticMeshComponent * AVisualActor::GetActorMesh() const
+{
+	return _Mesh;
+}

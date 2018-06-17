@@ -14,7 +14,8 @@ APlayerCharacter::APlayerCharacter()
 		{CreateDefaultSubobject<USpringArmComponent>("Camera boon component")}
 	, _CameraComponent
 		{CreateDefaultSubobject<UCameraComponent>("Camera component")}
-	, _MaxTraceDistance {200}
+	, _MaxTraceDistance {400}
+	, _focus_actor {nullptr}
 {
 	/* Setup Camera */
 	_SpringArmComponent->SetupAttachment(GetRootComponent());
@@ -44,8 +45,13 @@ APlayerCharacter::APlayerCharacter()
 void APlayerCharacter::Tick(float delta)
 {
 	AInteractableActor* hit {RaytraceInteractableActor()};
+	if (_focus_actor && hit != _focus_actor) {
+		_focus_actor->OnEndFocus();
+	}
+	_focus_actor = hit;
 	if (hit) {
 		PRINT_DEBUG_MESSAGE(hit->GetInteractableName());
+		hit->OnFocus();
 	}
 }
 
