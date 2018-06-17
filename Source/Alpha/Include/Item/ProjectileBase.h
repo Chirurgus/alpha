@@ -16,7 +16,9 @@ public:
 	AProjectileBase();
 
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	void BeginPlay() override;
+
+	void EndPlay(const EEndPlayReason::Type reason) override;
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
@@ -32,4 +34,10 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UProjectileMovementComponent* _MovementComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float _LifeDuration;
+
+	UPROPERTY()
+	FTimerHandle _DeathTimer;
 };
