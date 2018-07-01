@@ -7,6 +7,8 @@
 #include "Include/Item/ProjectileBase.h"
 #include "Include/Component/ActiveInventoryComponent.h"
 #include "Include/Component/InventoryComponent.h"
+#include "Include/Component/CoverComponent.h"
+
 #include "CharacterBase.generated.h"
 
 UCLASS(Blueprintable)
@@ -67,6 +69,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 	bool IsShootPressed() const;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cover")
+	UCoverComponent* CoverComponent;
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	UActiveInventoryComponent* _ActiveInventoryComponent;
@@ -86,9 +91,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float _MaxCrouchSpeed;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-	bool _in_cover;
-
 	bool _is_sprinting {false};
 	bool _is_aiming {false};
 	bool _is_jump_pressed {false};

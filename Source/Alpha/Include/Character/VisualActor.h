@@ -17,7 +17,7 @@ public:
 	// Sets default values for this actor's properties
 	AVisualActor();
 
-protected:
+public:
 	UFUNCTION(BlueprintCallable, Category = "Mesh")
 	UStaticMeshComponent* GetActorMesh() const;
 	
