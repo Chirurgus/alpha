@@ -10,6 +10,14 @@
 ACoverActor::ACoverActor()
 	: BoxComponent {CreateDefaultSubobject<UBoxComponent>("Box component")}
 {
+	BoxComponent->AttachToComponent(RootComponent,
+							 FAttachmentTransformRules {
+								EAttachmentRule::KeepRelative,
+								EAttachmentRule::KeepRelative,
+								EAttachmentRule::KeepRelative,
+								false
+							}
+	);
 }
 
 void ACoverActor::BeginPlay()
@@ -17,9 +25,15 @@ void ACoverActor::BeginPlay()
 	Super::BeginPlay();
 
 	if (BoxComponent) {
-		BoxComp->OnComponentBeginOverlap.AddDynamic(this, &ACoverActor::OnBoxCompBeginOverlap);
-		BoxComp->OnComponentEndOverlap.AddDynamic(this, &ACoverActor::OnBoxCompEndOverlap);
+		BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &ACoverActor::OnBoxCompBeginOverlap);
+		BoxComponent->OnComponentEndOverlap.AddDynamic(this, &ACoverActor::OnBoxCompEndOverlap);
 	}
+}
+
+FVector ACoverActor::GetLatteralDirection() const
+{
+	FRotator rot {_ArrowComponent->GetComponentRotation()};
+	return (rot + FRotator{0,90,0}).Vector();
 }
 
 void ACoverActor::OnBoxCompBeginOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)

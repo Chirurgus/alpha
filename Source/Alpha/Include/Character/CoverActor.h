@@ -25,7 +25,7 @@ public:
 	FVector GetLatteralDirection() const;
 
 protected:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	UBoxComponent* BoxComponent;
 	
 private:

@@ -37,9 +37,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	bool IsJumpPressed() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-	bool IsInCover() const;
-
 	/* Inventory */
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	UInventoryComponent* GetInventoryComponent();

@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/ActorComponent.h"
 
-#include "Include/Components/ActorComponent.h"
 #include "Include/Character/CoverActor.h"
 
 #include "CoverComponent.generated.h"
@@ -26,13 +26,13 @@ public:
 	bool GetCanTakeCover() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Cover")
-	bool GetInCover() const;
+	bool IsInCover() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Cover")
 	FVector GetCoverMovementDirection() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Cover")
-	void SetCanTakeCover(const bool b, const ACoverActor* cover);
+	void SetCanTakeCover(const bool b, ACoverActor* cover);
 
 	UFUNCTION(BlueprintCallable, Category = "Cover")
 	void SetInCover(const bool b);

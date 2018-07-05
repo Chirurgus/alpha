@@ -34,7 +34,7 @@ bool UCoverComponent::GetCanTakeCover() const
 	return bCanTakeCover;
 }
 
-bool UCoverComponent::GetInCover() const
+bool UCoverComponent::IsInCover() const
 {
 	return bInCover;
 }
@@ -44,13 +44,12 @@ FVector UCoverComponent::GetCoverMovementDirection() const
 	return CoverMovementDirection;
 }
 
-void UCoverComponent::SetCanTakeCover(const bool b, const ACoverActor* cover)
+void UCoverComponent::SetCanTakeCover(const bool b, ACoverActor* cover)
 {
 	if (cover && b) {
 		bCanTakeCover = true;
 
-		FRotator rot{CoverMovementDirection = cover->_ArrowComponent->GetComponentRotation()};
-		CoverMovementDirection = rot + FRotator {0,90,0};
+		CoverMovementDirection = cover->GetLatteralDirection();
 	}
 	else {
 		bCanTakeCover = false;
