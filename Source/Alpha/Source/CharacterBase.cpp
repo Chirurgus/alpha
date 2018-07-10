@@ -14,7 +14,8 @@ ACharacterBase::ACharacterBase()
 		{CreateDefaultSubobject<UActiveInventoryComponent>("Active inventory component")}
 	, _InventoryComponent
 		{CreateDefaultSubobject<UInventoryComponent>("Inventory component")}
-	, _in_cover {false}
+	, CoverComponent
+		{CreateDefaultSubobject<UCoverComponent>("Cover Component")}
 { 	
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -59,10 +60,7 @@ bool ACharacterBase::IsJumpPressed() const
 {
 	return _is_jump_pressed;
 }
-bool ACharacterBase::IsInCover() const
-{
-	return _in_cover;
-}
+
 bool ACharacterBase::IsShootPressed() const
 {
 	return _is_shoot_pressed;

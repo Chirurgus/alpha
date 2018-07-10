@@ -103,8 +103,14 @@ void APlayerCharacter::MoveForward(float v)
 	
 		// get right vector 
 		const FVector dir {FRotationMatrix(yaw_rotation).GetUnitAxis(EAxis::X)};
+
+		if (CoverComponent->IsInCover()) {
+			AddMovementInput(CoverComponent->GetCoverMovementDirection() * FVector::DotProduct(dir, CoverComponent->GetCoverMovementDirection()), v);
+		}
+		else {
+			AddMovementInput(dir, v);
+		}
 		// add movement in that direction
-		AddMovementInput(dir, v);
 	}
 }
 
@@ -117,8 +123,14 @@ void APlayerCharacter::MoveRight(float v)
 	
 		// get right vector 
 		const FVector dir {FRotationMatrix(yaw_rotation).GetUnitAxis(EAxis::Y)};
+
 		// add movement in that direction
-		AddMovementInput(dir, v);
+		if (CoverComponent->IsInCover()) {
+			AddMovementInput(CoverComponent->GetCoverMovementDirection() * FVector::DotProduct(dir, CoverComponent->GetCoverMovementDirection()), v);
+		}
+		else {
+			AddMovementInput(dir, v);
+		}
 	}
 }
 
@@ -176,10 +188,15 @@ void APlayerCharacter::InteractReleased()
 void APlayerCharacter::CrouchPressed()
 {
 	Crouch();
+	if (CoverComponent->GetCanTakeCover()) {
+		CoverComponent->SetInCover(true);
+		PRINT_DEBUG_MESSAGE("TAKING COVER!");
+	}
 }
 
 void APlayerCharacter::CrouchReleased()
 {
+	CoverComponent->SetInCover(false);
 	UnCrouch();
 }
 
