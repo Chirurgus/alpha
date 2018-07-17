@@ -23,12 +23,10 @@ AProjectileBase::AProjectileBase()
 	_MovementComponent
 		= CreateDefaultSubobject<UProjectileMovementComponent> ("MovementComponent");
 	_MovementComponent->SetUpdatedComponent(_SphereComponent);
-	_MovementComponent->InitialSpeed = 500.0f;
-	/*
+	_MovementComponent->InitialSpeed = 1000.0f;
 	_MovementComponent->MaxSpeed = 20000.0f;
 	_MovementComponent->bRotationFollowsVelocity = true;
-	_MovementComponent->bShouldBounce = false;
-	*/
+	_MovementComponent->bShouldBounce = true;
 }
 
 // Called when the game starts or when spawned
