@@ -15,17 +15,24 @@ class ALPHA_API ADoorActor : public AInteractableActor
 	GENERATED_BODY()
 public:
 	bool Interact() override { 
+		float rotation {90};
+		if (IsOpen) {
+			rotation *= -1;
+		}
+
 		FHitResult hit{};
-		_Mesh->AddRelativeRotation(
-			FRotator{0,90,0},
+		AddActorLocalRotation(
+			FRotator{0,rotation,0},
 			true,
 			&hit,
 			ETeleportType::None
 		);
+		IsOpen = !IsOpen;
 		return true;
 	}
 	bool CanInteract() override { return true; }
 	FString GetInteractableName() { return "Door"; }
-	
-	
+
+	UPROPERTY(BlueprintReadOnly, Category= "Enviroment")
+	bool IsOpen = false;
 };
